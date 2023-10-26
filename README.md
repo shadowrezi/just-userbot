@@ -1,11 +1,9 @@
 
 ## just-userbot
 is a Python userbot built using the Pyrogram library. It's designed to enhance your Telegram experience with various features and commands. With just-userbot, you can perform actions like simulating typing, controlling your PC, performing magic tricks, and even using ChatGPT for generating text.
-<<<<<<< HEAD
-d
+
 =======
 
->>>>>>> 41c3c71b1e52d9b4ab3de105dcaa1c73fed42d3d
 ## Features
 
 - **.magic**: Very beautiful effect with many hearts ❤️❤️❤️
