@@ -85,8 +85,4 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
    .shutdown  (shutdown pc, only on linux)
    .restart  (restart pc, only on linux)
    .cancel  (cancel restart or pc, only on linux)
-<<<<<<< HEAD
    ```
-=======
-   ```
->>>>>>> 41c3c71b1e52d9b4ab3de105dcaa1c73fed42d3d
