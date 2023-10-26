@@ -9,14 +9,10 @@ from re import search as re_search
 
 @Client.on_message(filters.command(commands="mini-magic", prefixes='.') & filters.me)
 async def mini_magic(client, msg: Message):
-
-    # Парсинг текста
     text_parsing = re_search(r'(?<=text\\=).+?(?=;)', msg.text)
 
-    # Обработка парсинга текста
     if text_parsing:
         text = text_parsing[0]
-    # Value by default
     else:
         text = '❤️'
 
