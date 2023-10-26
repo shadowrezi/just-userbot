@@ -54,7 +54,7 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
 
    [Openai site: create or copy your key](https://platform.openai.com/account/api-keys)
 
-9. Create `.env` file:
+<!-- 9. Create `.env` file:
 
    Windows (remove '1' from file):
       ```shell
@@ -64,8 +64,8 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
    Linux:
       ```shell
       touch .env
-      ```
-10. Write in `.env` this data:
+      ``` -->
+9. Write in `.env` this data:
    ```
    API_ID=<your api id>
    API_HASH=<your api hash>
@@ -73,11 +73,11 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
    OPENAI_TOKEN=<your openai api key>
    ```
 
-11. Start userbot:
+10. Start userbot:
    ```shell
    python userbot.py
    ```
-12. Try all commands:
+11. Try all commands:
    ```
    .magic
    .gpt <prompt>
