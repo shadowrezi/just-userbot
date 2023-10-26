@@ -14,6 +14,10 @@ and write there your api id and hash, for example:
 api_id=123
 api_hash=321
 
+openai_api_key=s1asdasdasdjqojdasjoiqioifewninweionfweio
+
+it's all needed data
+
 WITHOUT WHITESPACE beetween name and value
 '''
 load_dotenv()
