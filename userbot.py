@@ -11,10 +11,10 @@ from dotenv import load_dotenv
 create a file ".env" (recommended)
 and write there your api id and hash, for example:
 
-api_id=123
-api_hash=321
+API_ID=123
+API_HASH=321
 
-openai_api_key=s1asdasdasdjqojdasjoiqioifewninweionfweio
+OPENAI_TOKEN=s1asdasdasdjqojdasjoiqioifewninweionfweio
 
 it's all needed data
 
@@ -22,8 +22,8 @@ WITHOUT WHITESPACE beetween name and value
 '''
 load_dotenv()
 
-API_ID = getenv('api_id')  # get on the telegram's official site
-API_HASH = getenv('api_hash')  # get on the telegram's official site
+API_ID = getenv('API_ID')  # get on the telegram's official site
+API_HASH = getenv('API_HASH')  # get on the telegram's official site
 
 app = Client(
     'my_account',
