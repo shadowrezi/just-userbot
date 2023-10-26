@@ -37,5 +37,14 @@ while True:
     except OperationalError:  # if database is locked
         if oc == 'Linux':
             system('kill -9 $(fuser my_account.session 2>/dev/null)')  # only on linux (ubuntu)
-            continue
-        break  # if oc isn't Linux
+        continue
+        
+        print(
+            '''You need to stop previosly python-userbot process!\n
+if you use Linux just run this: \n`kill -9 $(fuser my_account.session 2>/dev/null)`
+if Windows this (I'm not sure if it will work):\n
+`tasklist /FI "IMAGENAME eq my_account.session"` you get PID then:
+`taskkill /I /PID <PID>` replace <PID> pid of my_account.session
+        '''  # TODO: Check is solution for Windows work
+        )
+        break
