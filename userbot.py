@@ -1,11 +1,8 @@
 from os import getenv, system
-from time import sleep
-from random import randint
-
-from pyrogram import Client, filters
-from pyrogram.errors import FloodWait
-
 from sqlite3 import OperationalError
+
+from pyrogram import Client
+
 import openai
 from dotenv import load_dotenv
 
