@@ -6,7 +6,6 @@ from pyrogram import Client
 import openai
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 openai.api_key = getenv('OPENAI_TOKEN')
@@ -25,6 +24,5 @@ while True:
         app.run()
         break
     except OperationalError:  # if database is locked
-        system('kill -9 $(fuser my_account.session 2>/dev/null)')
+        system('kill -9 $(fuser my_account.session 2>/dev/null)')  # only on linux (ubuntu)
         continue
-
