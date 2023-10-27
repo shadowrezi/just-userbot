@@ -36,26 +36,15 @@ OS = get_os()  # your operational system (Windows, Linux, MacOS)
 
 
 def main():
-    
-    while True:
-        try:
-            app.run()
-            break
-        except OperationalError:  # if database is locked
-            if OS == 'Linux':
-                system('kill -9 $(fuser my_account.session 2>/dev/null)')  # only on linux (ubuntu)
-            continue
-            
-            print(
-                '''You need to stop previosly python-userbot process!\n
-    if you use Linux just run this: \n`kill -9 $(fuser my_account.session 2>/dev/null)`
-    if Windows this (I'm not sure if it will work):\n
-    `tasklist /FI "IMAGENAME eq my_account.session"` you get PID then:
-    `taskkill /I /PID <PID>` replace <PID> pid of my_account.session
-            '''  # TODO: Check is solution for Windows work
-                # TODO: Add solution for Windows in auto-execute
-            )
-            break
+    try:
+        app.run()
+    except OperationalError:  # if database is locked
+        if OS == 'Linux':
+            pass
+            system('kill -9 $(fuser my_account.session 2>/dev/null)')  # only on linux (ubuntu)
+        elif OS == 'Windows':
+            # TODO: Check is solution for Windows work
+            system('taskkill /F /FI "IMAGENAME eq python.exe" /T')
 
 
 if __name__ == '__main__':
