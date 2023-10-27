@@ -8,8 +8,7 @@ from dotenv import load_dotenv
 
 
 '''
-create a file ".env" (recommended)
-and write there your api id and hash, for example:
+write in file `.env` your api id and hash, for example:
 
 API_ID=123
 API_HASH=321
@@ -20,6 +19,7 @@ it's all needed data
 
 WITHOUT WHITESPACE beetween name and value
 '''
+
 load_dotenv()
 
 API_ID = getenv('API_ID')  # get on the telegram's official site
