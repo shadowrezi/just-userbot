@@ -22,7 +22,9 @@ async def song(_, message):
         thumbnail = results[0]['thumbnails'][0]
         thumb_name = f'{title}.jpg'
         thumb = requests.get(thumbnail, allow_redirects=True)
+        
         open(thumb_name, 'wb').write(thumb.content)
+        
         duration = results[0]['duration']
 
     except Exception as e:
@@ -38,7 +40,12 @@ async def song(_, message):
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = '**🎧 Uploader @ShadowRazea**'
+        rep = '''
+<b>🎧 Uploader @ShadowRazea
+This bot is uploaded on my \
+<a href='https://github.com/shadowrezi/just-userbot'>GitHub</a>
+</b>
+'''.strip()
         secmul, dur, dur_arr = 1, 0, duration.split(':')
         
         for i in range(len(dur_arr) - 1, -1, -1):
