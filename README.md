@@ -5,17 +5,19 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
 
 ## Features
 
-- **.magic**: Very beautiful effect with many hearts ❤️❤️❤️
+- **All your message will with typing effect, you need to try it :) ⌨️**
+
+- **.music \<song name>**: Search and get any videos or songs from [Youtube 🎥](www.youtube.com/)
 
 - **.gpt \<prompt>**: Utilize ChatGPT to generate text based on your prompt.
 
 - **.shutdown**: Shutdown your PC with this command. No arguments required.
 
-- **.restart**: Restart your PC using this command. No arguments needed.
+- **.restart**: Restart your PC using this command. No arguments needed.  🔄
 
 - **.cancel**: Cancel any ongoing shutdown or restart process. No arguments required.
 
-- **All your message will with typing effect, you need to try it :)**
+- **.magic**: Very beautiful effect with many hearts ❤️❤️❤️
 
 ## Usage
 
@@ -67,7 +69,7 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
       ```shell
       touch .env
       ``` -->
-9. Write in `.env` this data:
+9. Write in file `.env` this data:
    ```
    API_ID=<your api id>
    API_HASH=<your api hash>
@@ -83,7 +85,8 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
    ```
    .magic
    .gpt <prompt>
-   .shutdown  (shutdown pc, only on linux)
-   .restart  (restart pc, only on linux)
-   .cancel  (cancel restart or pc, only on linux)
+   .shutdown  (shutdown pc, Linux and Windows)
+   .restart  (restart pc, Linux and Windows)
+   .cancel  (cancel restart or pc, Linux and Windows)
+   .music <prompt>
    ```
