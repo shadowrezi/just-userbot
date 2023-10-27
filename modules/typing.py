@@ -8,7 +8,6 @@ from pyrogram import enums
 @Client.on_message(filters.me)
 async def type(_, msg):
     if msg.voice is not None:
-        # print('Message is voice! ')
         return
     
     original_text = msg.text
