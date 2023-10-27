@@ -19,6 +19,8 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
 
 ## Usage
 
+**Start the bot in `just-userbot` folder only**
+
 1. Clone the repository:
 
    ```shell
