@@ -4,6 +4,7 @@ from pyrogram import Client, filters
 from pyrogram import enums
 
 import openai
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,7 +19,7 @@ async def chatGPT(client, msg):
         messages=[{'content': msg.text, 'role': 'user'}],
         max_tokens=1000,
     )
-    # print(msg)
+
     await msg.reply(
         f'**{response.choices[0].message.content}**',  # `**` for bold text
         parse_mode=enums.ParseMode.MARKDOWN
