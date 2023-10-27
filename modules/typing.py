@@ -1,12 +1,34 @@
 from time import sleep
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from pyrogram import enums
 
 
+typing_enabled = True
+
+
+@Client.on_message(filters.command('switch-typing', '.') & filters.me)
+async def switch_typing(_, message: Message):
+    global typing_enabled
+
+    typing_enabled = not typing_enabled
+    
+    state = 'enabled' if typing_enabled else 'disabled'
+    
+    await message.reply(
+        f'<b>Typing is {state}! </b>'
+    )
+
+
 @Client.on_message(filters.me)
-async def type(_, msg):
+async def type(_, msg: Message):
+    global typing_enabled
+
+    if not typing_enabled:
+        return
+    
     if msg.voice is not None:
         return
     
