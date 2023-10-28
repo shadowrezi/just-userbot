@@ -11,5 +11,5 @@ async def all_commands(_, message: Message):
 
     await message.reply(
         '**List of all commands:\n **'
-         + '\n'.join(f'<code>{PREFIX}{handle}</code>' for handle in HANDLERS)
+        + '\n'.join(f'<code>{PREFIX}{handle}</code>' for handle in HANDLERS)
     )
