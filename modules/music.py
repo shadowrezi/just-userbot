@@ -68,11 +68,9 @@ This bot is uploaded on my \
         await m.edit('**❌ Error, wait for bot owner to fix**')
         print(e)
 
-    try:
+    finally:
         os.remove(audio_file)
         os.remove(thumb_name)
-    except Exception as e:
-        print(e)
-    
+
     print(audio_file)
     print(thumb_name)
