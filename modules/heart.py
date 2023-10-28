@@ -7,7 +7,7 @@ from pyrogram.errors import FloodWait
 from re import search as re_search
 
 
-@Client.on_message(filters.command(commands="mini-magic", prefixes='.') & filters.me)
+@Client.on_message(filters.command(commands="magic", prefixes='.') & filters.me)
 async def mini_magic(client, msg: Message):
     text_parsing = re_search(r'(?<=text\\=).+?(?=;)', msg.text)
 
