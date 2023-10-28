@@ -2,6 +2,8 @@ from os import getenv, system
 from sqlite3 import OperationalError
 from platform import system as get_os
 
+import rich
+
 from pyrogram import Client
 
 from dotenv import load_dotenv
@@ -37,14 +39,20 @@ OS = get_os()  # your operational system (Windows, Linux, MacOS)
 
 def main():
     try:
+        print('Running bot...')
         app.run()
     except OperationalError:  # if database is locked
+        print('Database is locked! ')
+        print('Please, execute `python userbot.py` again! ')
+
         if OS == 'Linux':
-            pass
             system('kill -9 $(fuser my_account.session 2>/dev/null)')  # only on linux (ubuntu)
         elif OS == 'Windows':
             # TODO: Check is solution for Windows work
             system('taskkill /F /FI "IMAGENAME eq python.exe" /T')
+    
+    except Exception:
+        rich.Console().print_exception()
 
 
 if __name__ == '__main__':
