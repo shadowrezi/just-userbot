@@ -29,7 +29,9 @@ async def song(_, message):
 
     except Exception as e:
         await m.edit(
-            "**❌ Song not found.\n\nPlease give a valid song name.**\n\nIf bot don't work, write me @ShadowRazea"
+            '''
+**❌ Song not found.\n\nPlease give a valid song name.**\n\nIf bot don't work, write me @ShadowRazea
+            '''.strip()
         )
         print(str(e))
         return
