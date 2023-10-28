@@ -52,7 +52,7 @@ def main():
             system('taskkill /F /FI "IMAGENAME eq python.exe" /T')
     
     except Exception:
-        rich.Console().print_exception()
+        rich.Console().print_exception()  # just beautuful exception
 
 
 if __name__ == '__main__':
