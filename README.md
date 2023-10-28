@@ -7,6 +7,8 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
 
 - **All your message will with typing effect, you need to try it :) ⌨️**
 
+- **.commands**: Get all commands
+
 -  **.switch-typing**: Switch on/off typing
 
 - **.music \<song name>**: Search and get any videos or songs from [Youtube 🎥](www.youtube.com/)
@@ -85,6 +87,7 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
    ```
 11. Try all commands:
    ```
+   .commands (get all commands)
    .switch-typing (switch on/off typing)
    .magic
    .gpt <prompt>
