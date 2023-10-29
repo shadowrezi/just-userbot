@@ -1,9 +1,13 @@
 
 ## just-userbot
-is a Python userbot built using the Pyrogram library. It's designed to enhance your Telegram experience with various features and commands. With just-userbot, you can perform actions like simulating typing, controlling your PC, performing magic tricks, and even using ChatGPT for generating text.
+**is a Python userbot built using the Pyrogram library. It's designed to enhance your Telegram experience with various features and commands. With this userbot, you can perform actions like simulating typing, controlling your PC, performing magic tricks, and even using ChatGPT for generating text.**
 
 
 ## Features
+
+- **Prefixes are `/` and `.`**
+
+
 
 - **All your message will with typing effect, you need to try it :) ⌨️**
 
@@ -11,7 +15,7 @@ is a Python userbot built using the Pyrogram library. It's designed to enhance y
 
 -  **.switch-typing**: Switch on/off typing
 
-- **.music \<song name>**: Search and get any videos or songs from [Youtube 🎥](www.youtube.com/)
+- **.music \<song name>**: Search and get any videos or songs from [Youtube 🎥](https://www.youtube.com/)
 
 - **.gpt \<prompt>**: Utilize ChatGPT to generate text based on your prompt.
 
