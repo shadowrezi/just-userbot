@@ -8,7 +8,10 @@ import yt_dlp
 
 
 @Client.on_message(
-    filters.command(['music'], '.') & filters.me
+    filters.command(
+        commands=['music'],
+        prefixes=['.', '/']
+    ) & filters.me
 )
 async def song(_, message):
     query = ' '.join(message.command[1:])

@@ -2,7 +2,12 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 
-@Client.on_message(filters.command('commands', prefixes='.'))
+@Client.on_message(
+    filters.command(
+        commands=['commands'],
+        prefixes='.'
+    ) & filters.me
+)
 async def all_commands(_, message: Message):
     HANDLERS = ['gpt', 'music', 'shutdown', 'restart', 'cancel', 'switch-typing', 'magic', 'commands']
     PREFIX = '.'
