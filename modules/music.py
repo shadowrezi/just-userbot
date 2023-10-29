@@ -68,7 +68,13 @@ This bot is uploaded on my \
         
         await m.delete()
     except Exception as e:
-        await m.edit('**❌ Error, wait for bot owner to fix**')
+        await m.edit(
+            '''
+<b>❌ Error, write to owner @ShadowRazea or add issue on \
+<a href="https://github.com/shadowrezi/just-userbot">GitHub Repository</a>
+</b>
+'''.strip()
+        )
         print(e)
 
     finally:
