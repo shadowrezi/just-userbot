@@ -7,9 +7,11 @@ async def all_commands(_, message: Message):
     HANDLERS = ['gpt', 'music', 'shutdown', 'restart', 'cancel', 'switch-typing', 'magic', 'commands']
     PREFIX = '.'
 
-    print(1)
+    commands = [
+        f'<code>{PREFIX}{handle}</code>'
+        for handle in HANDLERS
+    ]
 
     await message.reply(
-        '**List of all commands:\n **'
-        + '\n'.join(f'<code>{PREFIX}{handle}</code>' for handle in HANDLERS)
+        '**List of all commands:\n **' + '\n'.join(commands)
     )
