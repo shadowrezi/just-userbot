@@ -42,7 +42,7 @@ def main():
         print('Running bot...')
         app.run()
     except OperationalError:  # if database is locked
-        print('Database is locked! ')
+        print('Database is locked! \n')
         print('Please, execute `python userbot.py` again! ')
 
         if OS == 'Linux':
