@@ -6,6 +6,7 @@ python-dotenv
 
 rich
 
-git+https://github.com/yt-dlp/yt-dlp
+yt-dlp==2023.10.13
+
 youtube-search-python
 youtube-search
