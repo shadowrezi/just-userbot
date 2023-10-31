@@ -9,7 +9,18 @@ from pyrogram.types import Message
     ) & filters.me
 )
 async def all_commands(_, message: Message):
-    HANDLERS = ['gpt', 'music', 'shutdown', 'restart', 'cancel', 'switch-typing', 'magic', 'commands']
+    HANDLERS = [
+        'gpt',
+        'music',
+        'shutdown',
+        'restart',
+        'cancel',
+        'switch-typing',
+        'magic',
+        'commands',
+        'qrcode',
+        'decode'
+    ]
     PREFIX = '.'
 
     commands = [
