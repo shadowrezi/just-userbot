@@ -8,6 +8,8 @@ python-dotenv
 qrcode
 opencv-python==4.8.0.74
 
+gTTS
+
 yt-dlp==2023.10.13
 youtube-search-python
 youtube-search
