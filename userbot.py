@@ -31,26 +31,29 @@ app = Client(
     'my_account',
     api_id=API_ID,
     api_hash=API_HASH,
-    plugins={'root': 'modules'}
+    plugins={
+        'root': 'plugins'  # {'root': '<folder with plugins>'}
+    }
 )
 
 
 def main():
     try:
         print('Running bot...')
+
         app.run()
     except OperationalError:  # if database is locked
         print('Database is locked! \n')
         print('Please, execute `python userbot.py` again! ')
         
-        OS = get_os()  # your operational system (Windows, Linux, MacOS)
+        OS = get_os()  # get your operational system (Windows, Linux, MacOS)
 
         if OS == 'Linux':
-            system('kill -9 $(fuser my_account.session 2>/dev/null)')  # only on linux (ubuntu)
+            system('kill -9 $(fuser my_account.session 2>/dev/null)')  # kill python process it locked db
         elif OS == 'Windows':
             # TODO: Check is solution for Windows work
-            system('taskkill /F /FI "IMAGENAME eq python.exe" /T')
-    
+            system('taskkill /F /FI "IMAGENAME eq python.exe" /T')  # kill python process it locked db
+
     except Exception:
         rich.Console().print_exception()  # just beautuful exception
 
