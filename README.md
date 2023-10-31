@@ -1,6 +1,6 @@
 
 ## just-userbot
-**is a Python userbot built using the Pyrogram library. It's designed to enhance your Telegram experience with various features and commands. With this userbot, you can perform actions like simulating typing, controlling your PC, performing magic tricks, and even using ChatGPT for generating text.**
+**is a Python userbot built using the Pyrogram library. It's designed to enhance your Telegram experience with various features and commands. With this userbot, you can perform actions like simulating typing, controlling your PC, make speech from text, encode and decode Qrcodes,  performing magic tricks, and even using ChatGPT for generating text.**
 
 
 ## Features
@@ -26,6 +26,12 @@
 - **.cancel**: Cancel any ongoing shutdown or restart process. No arguments required.
 
 - **.magic**: Very beautiful effect with many hearts ❤️❤️❤️
+
+- **.qrcode \<prompt>**: Create a qrcode
+
+- **.decode** (replied on photo-message): Decode any qrcode
+
+- **.gtts \<prompt>**: Make speech from text (language by default is ukrainian, plugins/TextToSpeech.py line 24) 
 
 ## Usage
 
@@ -99,14 +105,3 @@
       ```shell
       $ python3 usebot.py
       ```
-12. Try all commands:
-   ```
-   .commands (get all commands)
-   .switch-typing (switch on/off typing)
-   .magic
-   .gpt <prompt>
-   .shutdown  (shutdown pc, Linux and Windows)
-   .restart  (restart pc, Linux and Windows)
-   .cancel  (cancel restart or pc, Linux and Windows)
-   .music <prompt>
-   ```
