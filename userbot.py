@@ -34,8 +34,6 @@ app = Client(
     plugins={'root': 'modules'}
 )
 
-OS = get_os()  # your operational system (Windows, Linux, MacOS)
-
 
 def main():
     try:
@@ -44,6 +42,8 @@ def main():
     except OperationalError:  # if database is locked
         print('Database is locked! \n')
         print('Please, execute `python userbot.py` again! ')
+        
+        OS = get_os()  # your operational system (Windows, Linux, MacOS)
 
         if OS == 'Linux':
             system('kill -9 $(fuser my_account.session 2>/dev/null)')  # only on linux (ubuntu)
