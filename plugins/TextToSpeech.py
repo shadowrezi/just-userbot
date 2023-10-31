@@ -15,7 +15,7 @@ from gtts import gTTS
 async def text_to_speech(_, message: Message):
     data = ' '.join(message.command[1:])
     filename = 'downloads/temp.mp3'
-    
+
     await message.edit(f'**{data}**')
     
     try:
