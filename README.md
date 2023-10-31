@@ -41,43 +41,47 @@
    cd just-userbot
    ```
 4. Create a virtual envorietment:
-   ```shell
-   python -m venv venv
-   ```
-5. Activate venv:
+   
+   Windows:
+      ```shell
+        $ python -m venv venv
+      ```
+   Linux:
+      ```shell
+         $ python3 -m venv venv
+      ```
+6. Activate venv:
 
    Windows:
       ```shell
-      .\venv\Scripts\activate
+      $ .\venv\Scripts\activate
       ```
    Linux:
       ```shell
-      source venv/bin/activate
+      $ source venv/bin/activate
       ```
-6. Install all requirements:
+7. Install all requirements:
    ```shell
-   pip install -r requirements.py
+   $ pip install -r requirements.py
    ```
-7. Get api id and api hash of your telegram account:
+8. Get api id and api hash of your telegram account:
 
    [Official telegram's site for Developers](https://my.telegram.org/apps)
 
-8. Get your openai api key:
+9. Get your openai api key:
 
    [Openai site: create or copy your key](https://platform.openai.com/account/api-keys)
-
-<!-- 9. Create `.env` file:
-
-   Windows (remove '1' from file):
+4. Create a virtual envorietment:
+   
+   Windows:
       ```shell
-      echo 1 > .env
+        $ echo . > .env
       ```
-      
    Linux:
       ```shell
-      touch .env
-      ``` -->
-9. Write in file `.env` this data:
+         $ touch .env
+      ```
+11. Write in file `.env` this data:
    ```
    API_ID=<your api id>
    API_HASH=<your api hash>
@@ -85,11 +89,17 @@
    OPENAI_TOKEN=<your openai api key>
    ```
 
-10. Start userbot:
-   ```shell
-   python userbot.py
-   ```
-11. Try all commands:
+11. Start userbot:
+
+   Windows:
+      ```shell
+      $ python userbot.py
+      ```
+   Linux:
+      ```shell
+      $ python3 usebot.py
+      ```
+12. Try all commands:
    ```
    .commands (get all commands)
    .switch-typing (switch on/off typing)
