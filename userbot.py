@@ -2,7 +2,7 @@ from os import getenv, system
 from sqlite3 import OperationalError
 from platform import system as get_os
 
-import rich
+from rich import console
 
 from pyrogram import Client
 
@@ -55,7 +55,7 @@ def main():
             system('taskkill /F /FI "IMAGENAME eq python.exe" /T')  # kill python process it locked db
 
     except Exception:
-        rich.Console().print_exception()  # just beautuful exception
+        console.Console().print_exception()  # just beautuful exception
 
 
 if __name__ == '__main__':
