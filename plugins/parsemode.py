@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from filters import in_message
+from misc.filters import in_message
 
 
 @Client.on_message(
