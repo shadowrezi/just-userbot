@@ -16,3 +16,4 @@ async def note(_, message: Message):
         return
     
     await msg.forward('self')  # forward replied message to `Saved notes`
+    await message.delete()
