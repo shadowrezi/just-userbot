@@ -11,20 +11,23 @@ from pyrogram.types import Message
     ) & filters.me
 )
 async def count(_, message: Message):
-    all_files = listdir('.') + list(
-        map(lambda x: 'plugins/' + x, listdir('./plugins'))
-    )
+    plugins = [
+        'plugins/' + file
+        for file in listdir('./plugins')
+    ]
     
+    all_files = listdir('.') + plugins
+ 
     all_py_files = (file for file in all_files if file.endswith('.py'))
     
     lines = sum(
         [
-            open(i, 'r').readlines().__len__()
+            len(open(i, 'r').readlines())
             for i in all_py_files
         ]
     )
     await message.reply(
-        f'**This project has writed by {lines} lines of code! **'
+        f'**This project is writed by {lines} lines of code! **'
         '\n\n'
         '@ShadowRazea\n'
         '<a href=https://github.com/shadowrezi/just-userbot>GitHub repo</a>'
