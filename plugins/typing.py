@@ -54,10 +54,9 @@ async def type(_, message: Message):
     if not typing_enabled:
         return
     
+    z = ''
     if bold:
         z = '**'
-    else:
-        z = ''
 
     if message.voice is not None:
         return
