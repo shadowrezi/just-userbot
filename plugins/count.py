@@ -15,8 +15,13 @@ async def count(_, message: Message):
         'plugins/' + file
         for file in listdir('./plugins')
     ]
-    
-    all_files = listdir('.') + plugins
+
+    miscs = [
+        'misc/' + file
+        for file in listdir('./misc')
+    ]
+
+    all_files = listdir('.') + plugins + miscs
  
     all_py_files = (file for file in all_files if file.endswith('.py'))
     
