@@ -7,6 +7,7 @@ from pyrogram import enums
 
 
 typing_enabled = True
+bold = True
 
 
 @Client.on_message(
@@ -27,13 +28,37 @@ async def switch_typing(_, message: Message):
     )
 
 
+@Client.on_message(
+    filters.command(
+        commands=['switch-bold'],
+        prefixes=['.', '/']
+    ) & filters.me
+)
+async def switch_bold(_, message: Message):
+    global bold
+    
+    bold = not bold
+    
+    state = 'enabled' if bold else 'disabled'
+    
+    await message.reply(
+        f'<b>Bolding is {state}</b>'
+    )
+
+
 @Client.on_message(filters.me)
 async def type(_, message: Message):
     global typing_enabled
+    global bold
 
     if not typing_enabled:
         return
     
+    if bold:
+        z = '**'
+    else:
+        z = ''
+
     if message.voice is not None:
         return
     
@@ -45,7 +70,7 @@ async def type(_, message: Message):
     while tbp != original_text:
         try:
             await message.edit(
-                '**' + tbp + typing_symbol + '**',  # `**` for bold text
+                z + tbp + typing_symbol + z,  # `**` for bold text
                 parse_mode=enums.ParseMode.MARKDOWN
             )
             await sleep(0.05)  # delay beetween symbol editing (50 ms)
@@ -54,7 +79,7 @@ async def type(_, message: Message):
             text = text[1:]
 
             await message.edit(
-                '**' + tbp + '**',  # `**` for bold text
+                z + tbp + z,  # `**` for bold text
                 parse_mode=enums.ParseMode.MARKDOWN
             )
             await sleep(0.05)  # delay beetween symbol editing (50 ms)
