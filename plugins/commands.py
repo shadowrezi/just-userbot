@@ -19,7 +19,12 @@ async def all_commands(_, message: Message):
         'magic',
         'commands',
         'qrcode',
-        'decode'
+        'decode',
+        'gtts',
+        'count',
+        'set',
+        'get',
+        'delete'
     ]
     PREFIX = '.'
 

@@ -1,13 +1,29 @@
 from asyncio import sleep
+from typing import Literal
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.errors import FloodWait
-from pyrogram import enums
 
 
-typing_enabled = True
-bold = True
+is_typing = True
+is_bold = True
+
+
+async def toggle_state(state_var_name: Literal['is_typing', 'is_bold'], message: Message, text: str):
+    global is_typing, is_bold
+
+    if state_var_name == 'is_typing':
+        is_typing = not is_typing
+        state_var = is_typing
+    elif state_var_name == 'is_bold':
+        is_bold = not is_bold
+        state_var = is_bold
+    else:
+        raise ValueError("Invalid state variable name")
+    
+    state = 'enabled' if state_var else 'disabled'
+    await message.reply(f'<b>{text} is {state}! </b>')
 
 
 @Client.on_message(
@@ -17,15 +33,7 @@ bold = True
     ) & filters.me
 )
 async def switch_typing(_, message: Message):
-    global typing_enabled
-
-    typing_enabled = not typing_enabled
-    
-    state = 'enabled' if typing_enabled else 'disabled'
-    
-    await message.reply(
-        f'<b>Typing is {state}! </b>'
-    )
+    await toggle_state('is_typing', message, 'Typing')
 
 
 @Client.on_message(
@@ -35,32 +43,24 @@ async def switch_typing(_, message: Message):
     ) & filters.me
 )
 async def switch_bold(_, message: Message):
-    global bold
-    
-    bold = not bold
-    
-    state = 'enabled' if bold else 'disabled'
-    
-    await message.reply(
-        f'<b>Bolding is {state}</b>'
-    )
+    await toggle_state('is_bold', message, 'Bold')
 
 
 @Client.on_message(filters.me)
 async def type(_, message: Message):
-    global typing_enabled
-    global bold
+    global is_typing
+    global is_bold
 
-    if not typing_enabled:
+    if not is_typing:
         return
-    
+
     z = ''
-    if bold:
+    if is_bold:
         z = '**'
 
     if message.voice is not None:
         return
-    
+
     original_text = message.text
     text = message.text
     tbp = ""  # to be printed
@@ -69,19 +69,17 @@ async def type(_, message: Message):
     while tbp != original_text:
         try:
             await message.edit(
-                z + tbp + typing_symbol + z,  # `**` for bold text
-                parse_mode=enums.ParseMode.MARKDOWN
+                z + tbp + typing_symbol + z  # `**` for bold text
             )
-            await sleep(0.05)  # delay beetween symbol editing (50 ms)
+            await sleep(0.025)  # delay beetween symbol editing (25 ms)
 
             tbp = tbp + text[0]
             text = text[1:]
 
             await message.edit(
-                z + tbp + z,  # `**` for bold text
-                parse_mode=enums.ParseMode.MARKDOWN
+                z + tbp + z  # `**` for bold text
             )
-            await sleep(0.05)  # delay beetween symbol editing (50 ms)
+            await sleep(0.025)  # delay beetween symbol editing (25 ms)
 
         except FloodWait as e:  # if messages are too often edited
             sleep(e.x)
