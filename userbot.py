@@ -2,6 +2,9 @@ from os import getenv, system
 from sqlite3 import OperationalError
 from platform import system as get_os
 
+import signal
+import sys
+
 from rich import console
 
 from pyrogram import Client
@@ -56,7 +59,17 @@ def main():
 
     except Exception:
         console.Console().print_exception()  # just beautuful exception
+    
+
+def handle_ctrl_z(signal, frame):
+    print('Exiting bot...')
+    sys.exit(0)
 
 
 if __name__ == '__main__':
+    signal.signal(
+        signal.SIGTSTP,
+        handle_ctrl_z
+    )
+
     main()
