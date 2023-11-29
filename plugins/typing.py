@@ -5,6 +5,8 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 
+from misc.filters import startswith
+
 
 is_typing = True
 is_bold = True
@@ -46,7 +48,7 @@ async def switch_bold(_, message: Message):
     await toggle_state('is_bold', message, 'Bold')
 
 
-@Client.on_message(filters.me)
+@Client.on_message(startswith('/') & filters.me)
 async def type(_, message: Message):
     global is_typing
     global is_bold
@@ -61,8 +63,8 @@ async def type(_, message: Message):
     if message.voice is not None:
         return
 
-    original_text = message.text
-    text = message.text
+    original_text = message.text[1:]  # without `/` symbol
+    text = message.text[1:]
     tbp = ""  # to be printed
     typing_symbol = "▒"  # symbol that will be writed after your letters
 
@@ -71,7 +73,7 @@ async def type(_, message: Message):
             await message.edit(
                 z + tbp + typing_symbol + z  # `**` for bold text
             )
-            await sleep(0.025)  # delay beetween symbol editing (25 ms)
+            await sleep(0.05)  # delay beetween symbol editing (25 ms)
 
             tbp = tbp + text[0]
             text = text[1:]
@@ -79,7 +81,7 @@ async def type(_, message: Message):
             await message.edit(
                 z + tbp + z  # `**` for bold text
             )
-            await sleep(0.025)  # delay beetween symbol editing (25 ms)
+            await sleep(0.05)  # delay beetween symbol editing (25 ms)
 
-        except FloodWait as e:  # if messages are too often edited
-            sleep(e.x)
+        except FloodWait as fd:  # if messages are too often edited
+            await sleep(fd.value)

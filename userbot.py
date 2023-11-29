@@ -8,6 +8,7 @@ import sys
 from rich import console
 
 from pyrogram import Client
+import uvloop  # for speeding up pyrogram
 
 from dotenv import load_dotenv
 
@@ -30,6 +31,7 @@ load_dotenv()
 API_ID = getenv('API_ID')  # get on the telegram's official site
 API_HASH = getenv('API_HASH')  # get on the telegram's official site
 
+uvloop.install()
 app = Client(
     'my_account',
     api_id=API_ID,

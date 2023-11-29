@@ -10,18 +10,18 @@ from gtts import gTTS
     filters.command(
         commands=['gtts'],
         prefixes=['.', '/']
-    ) & filters. me
+    )
 )
 async def text_to_speech(_, message: Message):
     data = ' '.join(message.command[1:])
     filename = 'downloads/temp.mp3'
 
-    await message.edit(f'**{data}**')
+    # await message.edit(f'**{data}**')
     
     try:
         gTTS(
             text=data,
-            lang='uk'
+            lang='ru'
         ).save(filename)
     
         await message.reply_voice(

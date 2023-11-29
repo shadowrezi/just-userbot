@@ -1,5 +1,6 @@
 Pyrogram==2.0.106
 TgCrypto==1.1.1
+uvloop
 
 openai==0.27.8
 
@@ -9,6 +10,8 @@ qrcode
 opencv-python==4.8.0.74
 
 gTTS
+
+pynekobin
 
 yt-dlp==2023.10.13
 youtube-search-python

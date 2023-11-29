@@ -11,7 +11,7 @@ import yt_dlp
     filters.command(
         commands=['music'],
         prefixes=['.', '/']
-    ) & filters.me
+    )# & filters.me
 )
 async def song(_, message):
     query = ' '.join(message.command[1:])
