@@ -2,7 +2,8 @@ Pyrogram==2.0.106
 TgCrypto==1.1.1
 uvloop
 
-openai==0.27.8
+# openai==0.27.8
+g4f
 
 python-dotenv
 

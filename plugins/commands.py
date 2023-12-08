@@ -1,3 +1,7 @@
+from os import listdir
+
+import re
+
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
@@ -9,30 +13,24 @@ from pyrogram.types import Message
     ) & filters.me
 )
 async def all_commands(_, message: Message):
-    HANDLERS = [
-        'gpt',
-        'music',
-        'shutdown',
-        'restart',
-        'cancel',
-        'switch-typing',
-        'magic',
-        'commands',
-        'qrcode',
-        'decode',
-        'gtts',
-        'count',
-        'set',
-        'get',
-        'delete'
-    ]
-    PREFIX = '.'
-
-    commands = [
-        f'<code>{PREFIX}{handle}</code>'
-        for handle in HANDLERS
+    files = listdir("plugins/")
+    py_files = [
+        file 
+        for file in files
+        if file.endswith('.py')
     ]
 
-    await message.reply(
-        '**Prefixes:\n/\n.\n\nList of all commands:\n **' + '\n'.join(commands)
-    )
+    text = ''
+
+    for i in py_files:
+        with open(f'plugins/{i}', 'r') as f:
+            text += f.read()
+
+    pattern = re.compile(r'commands=\[[^]]*]')
+    
+    commands = ''
+    for command in pattern.findall(text):
+        commands += command[11:-2] 
+        commands += '\n'
+
+    await message.reply(commands)
