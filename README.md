@@ -3,13 +3,22 @@
 **is a Python userbot built using the Pyrogram library. It's designed to enhance your Telegram experience with various features and commands. With this userbot, you can perform actions like simulating typing, controlling your PC, make speech from text, encode and decode Qrcodes,  performing magic tricks, and even using ChatGPT for generating text.**
 
 
-## Features
+## 📖 Table of Contents
+- [📦 Features](#-features)
+- [📂 Userbot Structure](#-userbot-structure)
+- [🚀 Getting Started](#-getting-started)
+    - [🔧 Installation](#-installation)
+    - [🤖 Running userbot](#-running-userbot)
+- [🤝 Contributing](#-contributing)
+
+
+## 📦 Features
 
 - **Prefixes are `/` and `.`**
 
 
 
-- **All your message will with typing effect, you need to try it :) ⌨️**
+- **All your message that starts with `/` will with typing effect, you need to try it :) ⌨️**
 
 - **.commands**: Get all commands
 
@@ -33,7 +42,39 @@
 
 - **.gtts \<prompt>**: Make speech from text (language by default is ukrainian, plugins/TextToSpeech.py line 24) 
 
-## Usage
+## 📂 Userbot Structure
+
+```sh
+└── just-userbot/
+    ├── misc/
+    │   ├── __init__.py 
+    │   └── filters.py
+    ├── plugins/
+    │   ├── TextToSpeech.py
+    │   ├── ai.py
+    │   ├── arts.py
+    │   ├── calculator.py
+    │   ├── commands.py
+    │   ├── count.py
+    │   ├── exec.py
+    │   ├── heart.py
+    │   ├── jokes.py
+    │   ├── music.py
+    │   ├── nekobin.py
+    │   ├── note.py
+    │   ├── parsemode.py
+    │   ├── pc_control.py
+    │   ├── processing.py
+    │   ├── qrcode.py
+    │   ├── typing.py
+    │   └── variables.py
+    ├── data.json
+    ├── requirements.txt
+    └── userbot.py
+```
+
+## 🚀 Getting Started
+### 🔧 Installation
 
 **Start the bot in `just-userbot` folder only**
 
@@ -94,14 +135,50 @@
 
    OPENAI_TOKEN=<your openai api key>
    ```
-
-11. Start userbot:
-
+### 🤖 Running userbot
    Windows:
-      ```shell
+      ```sh
       $ python userbot.py
       ```
    Linux:
-      ```shell
+      ```sh
       $ python3 usebot.py
       ```
+
+
+## 🤝 Contributing
+
+Contributions are welcome! Here are several ways you can contribute:
+
+- **[Submit Pull Requests](https://github.com/shadowrezi/userbot-template/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+- **[Join the Discussions](https://github.com/shadowrezi/userbot-template/discussions)**: Share your insights, provide feedback, or ask questions.
+- **[Report Issues](https://github.com/shadowrezi/userbot-template/issues)**: Submit bugs found or log feature requests for SHADOWREZI.
+
+#### *Contributing Guidelines*
+
+<details closed>
+<summary>Click to expand</summary>
+
+1. **Fork the Repository**: Start by forking the project repository to your GitHub account.
+2. **Clone Locally**: Clone the forked repository to your local machine using a Git client.
+   ```sh
+   git clone <your-forked-repo-url>
+   ```
+3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
+   ```sh
+   git checkout -b new-feature-x
+   ```
+4. **Make Your Changes**: Develop and test your changes locally.
+5. **Commit Your Changes**: Commit with a clear and concise message describing your updates.
+   ```sh
+   git commit -m 'Implemented new feature x.'
+   ```
+6. **Push to GitHub**: Push the changes to your forked repository.
+   ```sh
+   git push origin new-feature-x
+   ```
+7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
+
+Once your PR is reviewed and approved, it will be merged into the main branch.
+
+</details>
