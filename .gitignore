@@ -1,7 +1,7 @@
 my_account.session
 my_account.session-journal
 
-__pycache__
+__pycache__/
 venv/
 
 plugins/me.py
