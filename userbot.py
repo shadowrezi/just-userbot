@@ -1,4 +1,5 @@
-from os import getenv, system
+from os import getenv, system, rmdir
+from os.path import exists
 from sqlite3 import OperationalError
 from platform import system as get_os
 
@@ -65,6 +66,10 @@ def main():
 
 def handle_ctrl_z(signal, frame):
     print('Exiting bot...')
+    
+    if exists('downloads'):
+        rmdir('downloads')
+
     sys.exit(0)
 
 
@@ -73,5 +78,9 @@ if __name__ == '__main__':
         signal.SIGTSTP,
         handle_ctrl_z
     )
+    try:
+        main()
+    finally:
+        if exists('downloads'):
+            rmdir('downloads')
 
-    main()
