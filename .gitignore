@@ -1,9 +1,8 @@
 my_account.session
-
 my_account.session-journal
 
 __pycache__
+venv/
 
-me.py
-
-test.py
+plugins/me.py
+plugins/test.py
