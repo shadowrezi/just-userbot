@@ -6,6 +6,7 @@ uvloop
 g4f
 
 bs4
+fake_useragent
 
 python-dotenv
 
