@@ -115,9 +115,9 @@
 
    [Official telegram's site for Developers](https://my.telegram.org/apps)
 
-9. Get your openai api key:
+9. Get your pexels api key:
 
-   [Openai site: create or copy your key](https://platform.openai.com/account/api-keys)
+   [Register and get api key](https://www.pexels.com/join-consumer/?onboarding=skipped)
 4. Create a virtual envorietment:
    
    Windows:
@@ -133,7 +133,7 @@
    API_ID=<your api id>
    API_HASH=<your api hash>
 
-   OPENAI_TOKEN=<your openai api key>
+   PEXELS_TOKEN=<your pexels api key>
    ```
 ### 🤖 Running userbot
    Windows:
