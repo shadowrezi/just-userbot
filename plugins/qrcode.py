@@ -15,18 +15,20 @@ from pyrogram.types import Message
 )
 async def create_qrcode(_, message: Message):
     data = ' '.join(message.command[1:])
-    filename = 'downloads/temp2.png'
+    filename = 'temp2.png'
     
-    qrcode\
-        .make(data=data)\
-        .save(filename)
+    try:
+        qrcode\
+            .make(data=data)\
+            .save(filename)
     
-    await message.reply_photo(
-        photo=filename,
-        quote=True
-    )
+        await message.reply_photo(
+            photo=filename,
+            quote=True
+        )
     
-    os.remove(filename)
+    finally:
+        os.remove(filename)
     
 
 @Client.on_message(
