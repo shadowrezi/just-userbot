@@ -1,8 +1,9 @@
-import requests
 import os
 
 from pyrogram import Client, filters
 
+from aiohttp import ClientSession
+from aiofiles import open
 from youtube_search import YoutubeSearch
 import yt_dlp
 
@@ -24,9 +25,13 @@ async def song(_, message):
         title = results[0]['title'][:40]
         thumbnail = results[0]['thumbnails'][0]
         thumb_name = f'{title}.jpg'
-        thumb = requests.get(thumbnail, allow_redirects=True)
         
-        open(thumb_name, 'wb').write(thumb.content)
+        async with ClientSession() as session:
+            async with session.get(thumbnail, allow_redirects=True) as response:
+                thumb = await response.read()
+        
+            async with open(thumb_name, 'wb') as f:
+                await f.write(thumb)
         
         duration = results[0]['duration']
 

@@ -13,6 +13,9 @@ python-dotenv
 qrcode
 opencv-python==4.8.0.74
 
+aiohttp
+aiofiles
+
 gTTS
 
 pynekobin
