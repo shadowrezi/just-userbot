@@ -1,5 +1,5 @@
 Pyrogram==2.0.106
-TgCrypto==1.1.1
+TgCrypto==1.2.5
 uvloop
 
 # openai==0.27.8
