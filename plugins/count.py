@@ -1,15 +1,15 @@
-from os import listdir
+from pathlib import Path
+
+from asyncio import gather, create_task
+from aiofiles import open
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
 
-def get_py_files_in_dir(dir: str) -> list[str]:
-    return [
-        dir + '/' + file
-        for file in listdir(f'./{dir}')
-        if file.endswith('.py')
-    ]
+async def readlines(filename: str) -> list:
+    async with open(filename) as f:
+        return await f.readlines()
 
 
 @Client.on_message(
@@ -19,20 +19,23 @@ def get_py_files_in_dir(dir: str) -> list[str]:
     ) & filters.me
 )
 async def count(_, message: Message):
-    plugins = get_py_files_in_dir('plugins')
-    miscs = get_py_files_in_dir('misc')
+    all_files = [
+        str(file)
+        for file in Path('.').rglob('*.py')
+        if 'venv' not in str(file) and \
+        '__pycache__' not in str(file) and \
+        'test.py' not in str(file)
+    ]
 
-    all_files = ['userbot.py'] + plugins + miscs
- 
-    list_lines = (
-        [open(file).readlines() for file in all_files]
-    )
-    
-    lines = [item for sublist in list_lines for item in sublist]
+    list_lines = [create_task(readlines(file)) for file in all_files]
 
-    count_lines = len(lines)
+    await gather(*list_lines)
 
-    count_symbols = len(''.join(lines))
+    lines = [item for sublist in list_lines for item in sublist.result()]
+
+    count_lines = len(lines)  # length of list of lines
+
+    count_symbols = len(''.join(lines))  # length of every line in list of lines
 
     await message.reply(
         '**This project is writed by '
@@ -41,4 +44,5 @@ async def count(_, message: Message):
         '@ShadowRazea\n'
         '<a href=https://github.com/shadowrezi/just-userbot>GitHub repo</a>'
     )
+
 
