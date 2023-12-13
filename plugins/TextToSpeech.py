@@ -33,5 +33,4 @@ async def text_to_speech(_: Client, message: Message):
         if 'downloads' not in dirs:
             return
         if filename in listdir('downloads'):
-            os.remove(filename)
-
+            remove(filename)
