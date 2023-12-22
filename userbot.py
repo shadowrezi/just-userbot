@@ -1,3 +1,4 @@
+from importlib import reload
 from os import getenv, system, rmdir
 from os.path import exists
 from sqlite3 import OperationalError
@@ -44,6 +45,10 @@ app = Client(
 
 
 def main():
+    signal.signal(
+        signal.SIGTSTP,
+        handle_ctrl_z
+    )
     try:
         print('Running bot...')
 
@@ -74,10 +79,6 @@ def handle_ctrl_z(signal, frame):
 
 
 if __name__ == '__main__':
-    signal.signal(
-        signal.SIGTSTP,
-        handle_ctrl_z
-    )
     try:
         main()
     finally:
