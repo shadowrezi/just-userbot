@@ -22,6 +22,7 @@ class BotControlApp:
         ctk.CTkButton(master, text='Stop', command=self.stop_bot).pack(pady=10)
         ctk.CTkButton(master, text='Restart', command=self.restart_bot).pack(pady=10)
         ctk.CTkButton(master, text='Quit', text_color='#ea0002', bg_color='#ffffff', command=self.quit_app).pack(pady=10)
+
         self.is_bot_runned = False
         self.bot = None
 
@@ -29,7 +30,7 @@ class BotControlApp:
         if not self.is_bot_runned:
             self.is_bot_runned = True
             self.update_label()
-            
+
             reload(userbot)
             self.bot = Process(
                 target=userbot.main
@@ -44,7 +45,7 @@ class BotControlApp:
             self.bot.terminate()
             self.bot.join()
 
-            print('Stopping bot!')
+            print('Bot was stop!')
 
     def restart_bot(self):
         if self.is_bot_runned:
@@ -65,3 +66,4 @@ if __name__ == "__main__":
     root = ctk.CTk()
     app = BotControlApp(root)
     root.mainloop()
+

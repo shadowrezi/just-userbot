@@ -50,7 +50,7 @@ def main():
         handle_ctrl_z
     )
     try:
-        print('Running bot...')
+        print('Starting bot...')
 
         app.run()
     except OperationalError:  # if database is locked
