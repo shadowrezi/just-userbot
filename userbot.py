@@ -1,37 +1,19 @@
-from importlib import reload
-from os import getenv, system, rmdir
+from os import getenv, rmdir
 from os.path import exists
-from sqlite3 import OperationalError
-from platform import system as get_os
 
 import signal
 import sys
 
-from rich import console
-
 from pyrogram import Client
-import uvloop  # for speeding up pyrogram
+import uvloop
 
 from dotenv import load_dotenv
 
 
-'''
-write in file `.env` your api id and hash, for example:
-
-API_ID=123
-API_HASH=321
-
-OPENAI_TOKEN=s1asdasdasdjqojdasjoiqioifewninweionfweio
-
-it's all needed data
-
-WITHOUT WHITESPACE beetween name and value
-'''
-
 load_dotenv()
 
-API_ID = getenv('API_ID')  # get on the telegram's official site
-API_HASH = getenv('API_HASH')  # get on the telegram's official site
+API_ID = getenv('API_ID')
+API_HASH = getenv('API_HASH')
 
 uvloop.install()
 app = Client(
@@ -39,9 +21,14 @@ app = Client(
     api_id=API_ID,
     api_hash=API_HASH,
     plugins={
-        'root': 'plugins'  # {'root': '<folder with plugins>'}
+        'root': 'plugins'
     }
 )
+
+if __name__ == '__main__':
+    with app:
+        message = app.send_message('me', '</b>Bot was started!</b>')
+        message.pin(True)
 
 
 def main():
@@ -49,29 +36,18 @@ def main():
         signal.SIGTSTP,
         handle_ctrl_z
     )
-    try:
-        print('Starting bot...')
+    print('Starting bot...')
 
-        app.run()
-    except OperationalError:  # if database is locked
-        print('Database is locked! \n')
-        print('Please, execute `python userbot.py` again! ')
-        
-        OS = get_os()  # get your operational system (Windows, Linux, MacOS)
+    app.run()
+    if __name__ != '__main__':
+        return
+    with app:
+        message.delete()
 
-        if OS == 'Linux':
-            system('kill -9 $(fuser my_account.session 2>/dev/null)')  # kill python process it locked db
-        elif OS == 'Windows':
-            # TODO: Check is solution for Windows work
-            system('taskkill /F /FI "IMAGENAME eq python.exe" /T')  # kill python process it locked db
-
-    except Exception:
-        console.Console().print_exception()  # just beautuful exception
-    
 
 def handle_ctrl_z(signal, frame):
     print('Exiting bot...')
-    
+
     if exists('downloads'):
         rmdir('downloads')
 
@@ -84,4 +60,3 @@ if __name__ == '__main__':
     finally:
         if exists('downloads'):
             rmdir('downloads')
-
