@@ -101,7 +101,6 @@ async def music(_: Client, message: Message):
         raise ex
 
     finally:
-        if 'thumb_name' not in locals():
         if await path.isfile(thumb_name):
             await remove(thumb_name)
             print(thumb_name)
