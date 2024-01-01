@@ -104,6 +104,6 @@ async def music(_: Client, message: Message):
         if await path.isfile(thumb_name):
             await remove(thumb_name)
             print(thumb_name)
-        if await path.isfile(audio_file):
+        if 'audio_file' in locals() and await path.isfile(audio_file):
             await remove(audio_file)
             print(audio_file)
