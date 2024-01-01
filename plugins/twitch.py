@@ -1,10 +1,17 @@
 from aiohttp import ClientSession
+from enum import Enum
 
 from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram.filters import me, private, command
 
 from fake_useragent import UserAgent
+
+
+class StreamStatus(Enum):
+    NOT_FOUND = -1
+    OFFLINE = 0
+    ONLINE = 1
 
 
 async def get_streamer_url(streamer: str) -> str:
@@ -23,8 +30,11 @@ async def is_stream_online(streamer: str) -> bool | None:
             content = await response.text()
 
     if streamer not in content:
-        return None
-    return 'isLiveBroadcast' in content
+        return StreamStatus.NOT_FOUND
+    elif 'isLiveBroadcast' in content:
+        return StreamStatus.ONLINE
+    else:
+        return StreamStatus.OFFLINE
 
 
 @Client.on_message(
@@ -38,13 +48,16 @@ async def is_stream_online_(_: Client, message: Message):
 
     url = await get_streamer_url(streamer)
 
-    is_online = await is_stream_online(streamer)
+    stream_status = await is_stream_online(streamer)
     streamer_link = f'<a href="{url}">{streamer}</a>'
-    if is_online:
-        text = f'{streamer_link} is live!'
-    elif is_online is None:
-        text = f'{streamer} not found!'
-    else:
-        text = f'{streamer_link} isn\'t live!'
+
+    match stream_status:
+        case StreamStatus.ONLINE:
+            text = f'<b>{streamer_link} is live!</b>'
+        case StreamStatus.OFFLINE:
+            text = f'<b>{streamer_link} isn\'t live!</b>'
+        case StreamStatus.NOT_FOUND:
+            text = f'<b>{streamer} not found!</b>'
 
     await message.reply(text)
+
