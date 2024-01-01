@@ -56,7 +56,7 @@ async def download_video(results: dict) -> str:
             dur += int(float(i)) * secmul
             secmul *= 60
 
-        return audio_file, thumb_name, dur
+        return audio_file, dur
 
 
 @Client.on_message(
@@ -78,8 +78,9 @@ async def download_and_send_song(_: Client, message: Message):
     await msg.edit(DOWNLOADING_FILE)
     
     try:
-        audio_file, thumb_name, duration = await download_video(results)
-        
+        audio_file, duration = await download_video(results)
+        thumb_name = f'{title}.jpg'
+            
         await msg.edit(UPLOADING_FILE)
 
         await message.reply_audio(
