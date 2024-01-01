@@ -73,7 +73,7 @@ async def music(_: Client, message: Message):
     msg = await message.reply(FINDING_SONG)
 
     try:
-        thumb, results, thumb_name = await search_video(query)
+        thumb, results = await search_video(query)
     except Exception as ex:
         await msg.edit(SONG_NOT_FOUND)
         raise ex
