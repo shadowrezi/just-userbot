@@ -25,9 +25,7 @@ ERROR = f'<b>❌ Error, write to OWNER @{OWNER} or add issue on <a href="https:/
 async def search_video(query: str) -> tuple:
     results = YoutubeSearch(query, max_results=1).to_dict()[0]
 
-    title = results['title'][:40]
     thumbnail = results['thumbnails'][0]
-    thumb_name = f'{title.replace(" ", "")}.jpg'
 
     headers = {'User-Agent': UserAgent().random}
 
@@ -35,16 +33,19 @@ async def search_video(query: str) -> tuple:
         async with session.get(thumbnail, allow_redirects=True) as response:
             thumb = await response.read()
 
-    async with open(thumb_name, 'wb') as f:
-        await f.write(thumb)
-
-    return thumb, results, title
+    return thumb, results
 
 
 async def download_video(results: dict) -> str:
     link = f"https://youtube.com{results['url_suffix']}"
+    
+    title = results['title'][:40]
+    thumb_name = f'{title.replace(" ", "")}.jpg'
     duration = results['duration']
 
+    async with open(thumb_name, 'wb') as f:
+        await f.write(thumb)
+    
     with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
         ydl.cache.remove()
 
@@ -58,7 +59,7 @@ async def download_video(results: dict) -> str:
         dur += int(float(i)) * secmul
         secmul *= 60
 
-    return audio_file, dur
+    return audio_file, dur, title, thumb_name
 
 
 @Client.on_message(
@@ -72,8 +73,7 @@ async def music(_: Client, message: Message):
     msg = await message.reply(FINDING_SONG)
 
     try:
-        thumb, results, title = await search_video(query)
-        thumb_name = f'{title.replace(" ", "")}.jpg'
+        thumb, results, thumb_name = await search_video(query)
     except Exception as ex:
         await msg.edit(SONG_NOT_FOUND)
         raise ex
@@ -81,7 +81,7 @@ async def music(_: Client, message: Message):
     await msg.edit(DOWNLOADING_FILE)
 
     try:
-        audio_file, duration = await download_video(results)
+        audio_file, duration, title, thumb_name = await download_video(results)
 
         await msg.edit(UPLOADING_FILE)
 
