@@ -30,6 +30,7 @@ async def download_video(results: dict) -> str:
     link = f"https://youtube.com{results['url_suffix']}"
     title = results['title'][:40]
     thumb_name = f'{title}.jpg'
+    thumbnail = results['thumbnails'][0]
     duration = results['duration']
 
     headers = {'User-Agent': UserAgent().random}
