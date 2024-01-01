@@ -5,7 +5,8 @@ from pyrogram.filters import me, private, command
 from pyrogram.types import Message
 
 from aiofiles import open
-from aiofiles.os import path.isfile as isfile, remove
+from aiofiles.os import remove
+from aiofiles.os.path import isfile
 from youtube_search import YoutubeSearch
 import yt_dlp
 from fake_useragent import UserAgent
