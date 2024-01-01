@@ -27,7 +27,7 @@ async def search_video(query: str) -> tuple:
 
     title = results['title'][:40]
     thumbnail = results['thumbnails'][0]
-    thumb_name = f'{title}.jpg'
+    thumb_name = f'{title.replace(" ", ""}.jpg'
 
     headers = {'User-Agent': UserAgent().random}
 
@@ -73,7 +73,7 @@ async def music(_: Client, message: Message):
 
     try:
         thumb, results, title = await search_video(query)
-        thumb_name = f'{title}.jpg'
+        thumb_name = f'{title.replace(" ", ""}.jpg'
     except Exception as ex:
         await msg.edit(SONG_NOT_FOUND)
         raise ex
