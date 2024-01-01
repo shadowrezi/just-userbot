@@ -12,11 +12,12 @@ from fake_useragent import UserAgent
 
 YDL_OPTIONS = {'format': 'bestaudio[ext=m4a]'}
 
-CAPTION = '<b>🎧 Uploader @ShadowRazea</b>'
-SONG_NOT_FOUND = "<b>❌ Song not found.\n\nPlease give a valid song name.</b>\n\nIf bot don't work, write me @ShadowRazea"
+OWNER = '@ShadowRazea'
+CAPTION = '<b>🎧 Uploader {OWNER}</b>'
+SONG_NOT_FOUND = "<b>❌ Song not found.\n\nPlease give a valid song name.</b>\n\nIf bot don't work, write me {OWNER}"
 DOWNLOADING_FILE = '<b>📥 Downloading file...</b>'
 UPLOADING_FILE = '<b>📤 Uploading file...</b>'
-ERROR = '<b>❌ Error, write to owner @ShadowRazea or add issue on <a href="https://github.com/shadowrezi/just-userbot">GitHub Repository</a></b>'
+ERROR = '<b>❌ Error, write to OWNER {OWNER} or add issue on <a href="https://github.com/shadowrezi/just-userbot">GitHub Repository</a></b>'
 
 
 async def search_video(query: str) -> tuple:
