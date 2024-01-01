@@ -1,7 +1,6 @@
-import os
 from aiohttp import ClientSession
 
-from pyrogram import Client 
+from pyrogram import Client
 from pyrogram.filters import me, private, command
 from pyrogram.types import Message
 
@@ -22,42 +21,42 @@ ERROR = f'<b>❌ Error, write to OWNER @{OWNER} or add issue on <a href="https:/
 
 
 async def search_video(query: str) -> tuple:
-        results = YoutubeSearch(query, max_results=1).to_dict()[0]
-    
-        title = results['title'][:40]
-        thumbnail = results['thumbnails'][0]
-        thumb_name = f'{title}.jpg'
+    results = YoutubeSearch(query, max_results=1).to_dict()[0]
 
-        headers = {'User-Agent': UserAgent().random}
-    
-        async with ClientSession(headers=headers) as session:
-            async with session.get(thumbnail, allow_redirects=True) as response:
-                thumb = await response.read()
-        
-        async with open(thumb_name, 'wb') as f:
-            await f.write(thumb)
+    title = results['title'][:40]
+    thumbnail = results['thumbnails'][0]
+    thumb_name = f'{title}.jpg'
 
-        return thumb, results, title
+    headers = {'User-Agent': UserAgent().random}
+
+    async with ClientSession(headers=headers) as session:
+        async with session.get(thumbnail, allow_redirects=True) as response:
+            thumb = await response.read()
+
+    async with open(thumb_name, 'wb') as f:
+        await f.write(thumb)
+
+    return thumb, results, title
 
 
 async def download_video(results: dict) -> str:
-        link = f"https://youtube.com{results['url_suffix']}"
-        duration = results['duration']
-    
-        with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
-            ydl.cache.remove()
+    link = f"https://youtube.com{results['url_suffix']}"
+    duration = results['duration']
 
-            info_dict = ydl.extract_info(link, download=False)
-            audio_file = ydl.prepare_filename(info_dict)
-            ydl.process_info(info_dict)
+    with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
+        ydl.cache.remove()
 
-        secmul, dur, dur_arr = 1, 0, duration.split(':')
-        
-        for i in dur_arr[::-1]:
-            dur += int(float(i)) * secmul
-            secmul *= 60
+        info_dict = ydl.extract_info(link, download=False)
+        audio_file = ydl.prepare_filename(info_dict)
+        ydl.process_info(info_dict)
 
-        return audio_file, dur
+    secmul, dur, dur_arr = 1, 0, duration.split(':')
+
+    for i in dur_arr[::-1]:
+        dur += int(float(i)) * secmul
+        secmul *= 60
+
+    return audio_file, dur
 
 
 @Client.on_message(
@@ -69,7 +68,7 @@ async def download_video(results: dict) -> str:
 async def music(_: Client, message: Message):
     query = ' '.join(message.command[1:])
     msg = await message.reply(FINDING_SONG)
-    
+
     try:
         thumb, results, title = await search_video(query)
         thumb_name = f'{title}.jpg'
@@ -78,10 +77,10 @@ async def music(_: Client, message: Message):
         raise ex
 
     await msg.edit(DOWNLOADING_FILE)
-    
+
     try:
         audio_file, duration = await download_video(results)
-            
+
         await msg.edit(UPLOADING_FILE)
 
         await message.reply_audio(
@@ -91,16 +90,16 @@ async def music(_: Client, message: Message):
             title=title,
             duration=duration,
         )
-        
+
         await msg.delete()
     except Exception as ex:
         await msg.edit(ERROR)
         raise ex
 
     finally:
-        if os.path.isfile(thumb_name):
-            os.remove(thumb_name)
+        if await aiofiles.os.path.isfile(thumb_name):
+            await aiofiles.os.remove(thumb_name)
             print(thumb_name)
-        if os.path.isfile(audio_file):
-            os.remove(audio_file)
+        if await aiofiles.os.path.isfile(audio_file):
+            await aiofiles.os.remove(audio_file)
             print(audio_file)
