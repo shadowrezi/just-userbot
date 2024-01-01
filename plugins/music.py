@@ -29,7 +29,7 @@ async def search_video(query: str) -> tuple:
 async def download_video(results: dict) -> str:
     link = f"https://youtube.com{results['url_suffix']}"
     title = results['title'][:40]
-    thumb_name = f'{title.replace(" ", "")}.jpg'
+    thumb_name = f'{title}.jpg'
     duration = results['duration']
 
     headers = {'User-Agent': UserAgent().random}
@@ -70,7 +70,7 @@ async def music(_: Client, message: Message):
     try:
         results = await search_video(query)
         title = results['title'][:40]
-        thumb_name = f'{title.replace(" ", "")}.jpg'
+        thumb_name = f'{title}.jpg'
     except Exception as ex:
         await msg.edit(SONG_NOT_FOUND)
         raise ex
