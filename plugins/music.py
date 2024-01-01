@@ -12,12 +12,13 @@ from fake_useragent import UserAgent
 
 YDL_OPTIONS = {'format': 'bestaudio[ext=m4a]'}
 
-OWNER = '@ShadowRazea'
-CAPTION = f'<b>🎧 Uploader {OWNER}</b>'
-SONG_NOT_FOUND = f"<b>❌ Song not found.\n\nPlease give a valid song name.</b>\n\nIf bot don't work, write me {OWNER}"
+OWNER = 'ShadowRazea'
+CAPTION = f'<b>🎧 Uploader @{OWNER}</b>'
+FINDING_SONG = '<b>🔎 Finding song...</b>'
+SONG_NOT_FOUND = f"<b>❌ Song not found.\n\nPlease give a valid song name.</b>\n\nIf bot don't work, write me @{OWNER}"
 DOWNLOADING_FILE = '<b>📥 Downloading file...</b>'
 UPLOADING_FILE = '<b>📤 Uploading file...</b>'
-ERROR = f'<b>❌ Error, write to OWNER {OWNER} or add issue on <a href="https://github.com/shadowrezi/just-userbot">GitHub Repository</a></b>'
+ERROR = f'<b>❌ Error, write to OWNER @{OWNER} or add issue on <a href="https://github.com/shadowrezi/just-userbot">GitHub Repository</a></b>'
 
 
 async def search_video(query: str) -> tuple:
@@ -65,9 +66,9 @@ async def download_video(results: dict) -> str:
         prefixes=['.', '/']
     ) & (me | private)
 )
-async def download_and_send_song(_: Client, message: Message):
+async def music(_: Client, message: Message):
     query = ' '.join(message.command[1:])
-    msg = await message.reply('<b>🔎 Finding song...</b>')
+    msg = await message.reply(FINDING_SONG)
     
     try:
         thumb, results, title = await search_video(query)
