@@ -7,6 +7,8 @@ import sys
 from pyrogram import Client
 import uvloop
 
+from colorama import Fore
+
 from dotenv import load_dotenv
 
 
@@ -36,17 +38,18 @@ def main():
         signal.SIGTSTP,
         handle_ctrl_z
     )
-    print('Starting bot...')
+    print(Fore.LIGHTGREEN_EX + 'Starting bot...' + Fore.RESET)
 
     app.run()
     if __name__ != '__main__':
         return
     with app:
+        message.unpin()
         message.delete()
 
 
 def handle_ctrl_z(signal, frame):
-    print('Exiting bot...')
+    print(Fore.LIGHTRED_EX + 'Exiting bot...' + Fore.RESET)
 
     if exists('downloads'):
         rmdir('downloads')
