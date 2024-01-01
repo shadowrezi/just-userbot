@@ -6,7 +6,8 @@ from pyrogram.types import Message
 
 from aiofiles import open
 from aiofiles.os import remove
-from aiofiles.os.path import isfile
+import aiofiles.os.path.isfilea as isfile
+
 from youtube_search import YoutubeSearch
 import yt_dlp
 from fake_useragent import UserAgent
