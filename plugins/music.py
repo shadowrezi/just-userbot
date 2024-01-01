@@ -100,8 +100,7 @@ async def music(_: Client, message: Message):
     finally:
         if os.path.isfile(thumb_name):
             os.remove(thumb_name)
+            print(thumb_name)
         if os.path.isfile(audio_file):
             os.remove(audio_file)
-
-    print(audio_file)
-    print(thumb_name)
+            print(audio_file)
