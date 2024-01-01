@@ -5,8 +5,7 @@ from pyrogram.filters import me, private, command
 from pyrogram.types import Message
 
 from aiofiles import open
-from aiofiles.os import remove
-import aiofiles.os.path.isfilea as isfile
+from aiofiles.os import remove, path
 
 from youtube_search import YoutubeSearch
 import yt_dlp
@@ -100,9 +99,9 @@ async def music(_: Client, message: Message):
         raise ex
 
     finally:
-        if await isfile(thumb_name):
+        if await path.isfile(thumb_name):
             await remove(thumb_name)
             print(thumb_name)
-        if await isfile(audio_file):
+        if await path.isfile(audio_file):
             await remove(audio_file)
             print(audio_file)
