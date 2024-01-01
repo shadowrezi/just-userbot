@@ -29,7 +29,7 @@ async def search_video(query: str) -> tuple:
 async def download_video(results: dict) -> str:
     link = f"https://youtube.com{results['url_suffix']}"
     title = results['title'][:40]
-    thumb_name = f'{title}.jpg'
+    thumb_name = f'{title.replace("/", "")}.jpg'
     thumbnail = results['thumbnails'][0]
     duration = results['duration']
 
@@ -55,7 +55,7 @@ async def download_video(results: dict) -> str:
         dur += int(float(i)) * secmul
         secmul *= 60
 
-    return audio_file, dur
+    return audio_file, dur, title, thumb_name
 
 
 @Client.on_message(
@@ -70,8 +70,6 @@ async def music(_: Client, message: Message):
 
     try:
         results = await search_video(query)
-        title = results['title'][:40]
-        thumb_name = f'{title}.jpg'
     except Exception as ex:
         await msg.edit(SONG_NOT_FOUND)
         raise ex
@@ -79,7 +77,7 @@ async def music(_: Client, message: Message):
     await msg.edit(DOWNLOADING_FILE)
 
     try:
-        audio_file, duration = await download_video(results)
+        audio_file, duration, title, thumb_name = await download_video(results)
 
         await msg.edit(UPLOADING_FILE)
 
