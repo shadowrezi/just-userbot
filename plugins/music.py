@@ -41,7 +41,7 @@ async def search_video(query: str) -> tuple:
 
 async def download_video(results: dict) -> str:
         link = f"https://youtube.com{results['url_suffix']}"
-        duration = results[0]['duration']
+        duration = results['duration']
     
         with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
             ydl.cache.remove()
