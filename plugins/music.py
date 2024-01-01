@@ -71,6 +71,7 @@ async def download_and_send_song(_: Client, message: Message):
     
     try:
         thumb, results, title = await search_video(query)
+        thumb_name = f'{title}.jpg'
     except Exception as ex:
         await msg.edit(SONG_NOT_FOUND)
         raise ex
@@ -79,7 +80,6 @@ async def download_and_send_song(_: Client, message: Message):
     
     try:
         audio_file, duration = await download_video(results)
-        thumb_name = f'{title}.jpg'
             
         await msg.edit(UPLOADING_FILE)
 
