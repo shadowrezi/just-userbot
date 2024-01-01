@@ -23,26 +23,21 @@ ERROR = f'<b>❌ Error, write to OWNER @{OWNER} or add issue on <a href="https:/
 
 
 async def search_video(query: str) -> tuple:
-    results = YoutubeSearch(query, max_results=1).to_dict()[0]
+    return YoutubeSearch(query, max_results=1).to_dict()[0]
 
-    thumbnail = results['thumbnails'][0]
+
+async def download_video(results: dict) -> str:
+    link = f"https://youtube.com{results['url_suffix']}"
+    title = results['title'][:40]
+    thumb_name = f'{title.replace(" ", "")}.jpg'
+    duration = results['duration']
 
     headers = {'User-Agent': UserAgent().random}
 
     async with ClientSession(headers=headers) as session:
         async with session.get(thumbnail, allow_redirects=True) as response:
             thumb = await response.read()
-
-    return thumb, results
-
-
-async def download_video(results: dict) -> str:
-    link = f"https://youtube.com{results['url_suffix']}"
     
-    title = results['title'][:40]
-    thumb_name = f'{title.replace(" ", "")}.jpg'
-    duration = results['duration']
-
     async with open(thumb_name, 'wb') as f:
         await f.write(thumb)
     
@@ -73,7 +68,7 @@ async def music(_: Client, message: Message):
     msg = await message.reply(FINDING_SONG)
 
     try:
-        thumb, results = await search_video(query)
+        results = await search_video(query)
         title = results['title'][:40]
         thumb_name = f'{title.replace(" ", "")}.jpg'
     except Exception as ex:
