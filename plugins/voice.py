@@ -5,7 +5,7 @@ from pyrogram.filters import me, private, voice, video_note, dice, command
 from pyrogram.types import Message
 
 
-is_voice_message_allowed = False
+is_voice_message_allowed = True
 
 
 @Client.on_message(
@@ -21,7 +21,7 @@ async def switch_voice(_: Client, message: Message) -> None:
 
 @Client.on_message(private & (voice | video_note))
 async def save_and_delete_voice_message(client: Client, message: Message) -> None:
-    if not is_voice_message_allowed:
+    if is_voice_message_allowed:
         return
     voice = await message.forward('me')
     
