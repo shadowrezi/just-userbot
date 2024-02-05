@@ -50,8 +50,7 @@ async def switch_bold(_, message: Message):
 
 @Client.on_message(startswith('/') & filters.me)
 async def type(_, message: Message):
-    global is_typing
-    global is_bold
+    global is_typing, is_bold
 
     if not is_typing:
         return
@@ -71,17 +70,17 @@ async def type(_, message: Message):
     while tbp != original_text:
         try:
             await message.edit(
-                z + tbp + typing_symbol + z  # `**` for bold text
+                z + tbp + typing_symbol + z
             )
-            await sleep(0.05)  # delay beetween symbol editing (25 ms)
+            await sleep(0.05)
 
             tbp = tbp + text[0]
             text = text[1:]
 
             await message.edit(
-                z + tbp + z  # `**` for bold text
+                z + tbp + z
             )
-            await sleep(0.05)  # delay beetween symbol editing (25 ms)
+            await sleep(0.05)
 
-        except FloodWait as fd:  # if messages are too often edited
+        except FloodWait as fd:
             await sleep(fd.value)
