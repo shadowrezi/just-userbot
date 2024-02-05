@@ -15,7 +15,7 @@ class StreamStatus(Enum):
 
 
 async def get_streamer_url(streamer: str) -> str:
-    if streamer.strip().startswith(['www.', 'https']:
+    if not streamer.strip().startswith(('www.', 'https')):
         streamer = f'https://www.twitch.tv/{streamer}'
     return streamer
 
