@@ -1,10 +1,10 @@
-import os
+from pyrogram import Client, filters
+from pyrogram.types import Message
 
+from aiofiles.os import remove
 import qrcode
 import cv2
 
-from pyrogram import Client, filters
-from pyrogram.types import Message
 
 
 @Client.on_message(
@@ -28,7 +28,7 @@ async def create_qrcode(_, message: Message):
         )
     
     finally:
-        os.remove(filename)
+        await remove(filename)
     
 
 @Client.on_message(
@@ -61,4 +61,4 @@ async def decoder(client: Client, message: Message):
         await message.edit("**Decoded Text:** " + f'<code>{tx}</code>')
     
     finally:
-        os.remove('downloads/temp.png')
+        await remove('downloads/temp.png')
