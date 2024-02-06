@@ -5,6 +5,6 @@ __pycache__/
 venv/
 
 plugins/me.py
-
 plugins/test.py
-plugins/tester.py
+
+tester.py
