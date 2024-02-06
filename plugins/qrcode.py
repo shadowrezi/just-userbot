@@ -40,24 +40,22 @@ async def create_qrcode(_: Client, message: Message):
 )
 async def decoder(client: Client, message: Message):
     msg = message.reply_to_message
-    
-    if not msg:
-        await client.download_media(message, 'temp.png')
-    
-    if not hasattr(message, 'photo'):
-        return 
 
-    if not (msg.photo or message.photo):
-        await message.reply('**Replied message must be a photo-message**', quote=True)
+    main_message = msg if msg else message
+
+    if not hasattr(main_message, 'photo'):
         return
     
-    await client.download_media(msg, 'temp.png')
+    if not (main_message.photo):
+        await message.reply('**Message must be a photo-message**', quote=True)
+        return
+        
+    
+    await client.download_media(main_message, 'temp.png')
     
     try:
         img = cv2.imread('downloads/temp.png')
-
-        det = cv2.QRCodeDetector()
-        tx, _, _ = det.detectAndDecode(img)
+        tx, _, _ = cv2.QRCodeDetector().detectAndDecode(img)
 
         await message.edit("**Decoded Text:** " + f'<code>{tx}</code>')
     
@@ -66,4 +64,5 @@ async def decoder(client: Client, message: Message):
             return
         if 'temp.png' in await listdir('downloads'):
             await remove('downloads/temp.png')
+
 
