@@ -1,5 +1,5 @@
-my_account.session
-my_account.session-journal
+telegram.session
+telegram.session-journal
 
 __pycache__/
 venv/

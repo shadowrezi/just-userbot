@@ -22,7 +22,7 @@ API_HASH = getenv('API_HASH')
 
 uvloop.install()
 app = Client(
-    'my_account',
+    'telegram',
     api_id=API_ID,
     api_hash=API_HASH,
     plugins={
