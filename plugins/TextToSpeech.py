@@ -1,8 +1,8 @@
-from os import remove, listdir
-
 from pyrogram import Client
 from pyrogram.filters import command, me, private
 from pyrogram.types import Message
+
+from aiofiles.os import remove, listdir
 
 from gtts import gTTS
 
@@ -29,8 +29,7 @@ async def text_to_speech(_: Client, message: Message):
             caption='Voiced by gTTS'
         )
     finally:
-        dirs = listdir('.')
-        if 'downloads' not in dirs:
+        if 'downloads' not in await listdir():
             return
-        if filename in listdir('downloads'):
-            remove(filename)
+        if filename in await listdir('downloads'):
+            await remove(filename)
