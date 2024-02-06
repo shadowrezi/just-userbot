@@ -1,5 +1,8 @@
-from os import getenv, rmdir
-from os.path import exists
+from os import getenv
+import asyncio
+from shutil import rmtree
+
+from aiofiles.os import path
 
 import signal
 import sys
@@ -48,11 +51,11 @@ def main():
         message.delete()
 
 
-def handle_ctrl_z(signal, frame):
+async def handle_ctrl_z(signal, frame):
     print(Fore.LIGHTRED_EX + 'Exiting bot...' + Fore.RESET)
 
-    if exists('downloads'):
-        rmdir('downloads')
+    if await exists('downloads'):
+        rmtree('downloads')
 
     sys.exit(0)
 
@@ -61,5 +64,5 @@ if __name__ == '__main__':
     try:
         main()
     finally:
-        if exists('downloads'):
-            rmdir('downloads')
+        if asyncio.run(path.exists('downloads')):
+            rmtree('downloads')

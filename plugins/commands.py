@@ -2,7 +2,8 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 import re
-from aiofiles.os import listdir, open
+from aiofiles import open
+from aiofiles.os import listdir
 
 
 @Client.on_message(

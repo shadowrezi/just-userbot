@@ -1,19 +1,20 @@
-from pyrogram import Client, filters
+from pyrogram import Client
+from pyrogram.filters import command, me, private
 from pyrogram.types import Message
 
-from aiofiles.os import remove
+from aiofiles.os import remove, listdir
 import qrcode
 import cv2
 
 
 
 @Client.on_message(
-    filters.command(
+    command(
         commands=['qrcode'],
         prefixes=['.', '/']
-    ) & filters.me
+    ) & (me | private)
 )
-async def create_qrcode(_, message: Message):
+async def create_qrcode(_: Client, message: Message):
     data = ' '.join(message.command[1:])
     filename = 'temp2.png'
     
@@ -32,21 +33,21 @@ async def create_qrcode(_, message: Message):
     
 
 @Client.on_message(
-    filters.command(
+    command(
         commands=['decode'],
         prefixes=['.', '/']
-    ) & filters.me
+    ) & (me | private)
 )
 async def decoder(client: Client, message: Message):
     msg = message.reply_to_message
     
     if not msg:
-        await message.reply('**Reply this command to photo-message!**', quote=True)
-        return
+        await client.download_media(message, 'temp.png')
     
-    photo = msg.photo
-    
-    if not photo:
+    if not hasattr(message, 'photo'):
+        return 
+
+    if not (msg.photo or message.photo):
         await message.reply('**Replied message must be a photo-message**', quote=True)
         return
     
@@ -61,4 +62,8 @@ async def decoder(client: Client, message: Message):
         await message.edit("**Decoded Text:** " + f'<code>{tx}</code>')
     
     finally:
-        await remove('downloads/temp.png')
+        if 'downloads' in await listdir():
+            return
+        if 'temp.png' in await listdir('downloads'):
+            await remove('downloads/temp.png')
+
