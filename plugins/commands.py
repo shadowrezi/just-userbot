@@ -1,9 +1,8 @@
-from aiofiles.os import listdir
-
-import re
-
 from pyrogram import Client, filters
 from pyrogram.types import Message
+
+import re
+from aiofiles.os import listdir, open
 
 
 @Client.on_message(
@@ -23,8 +22,8 @@ async def all_commands(_, message: Message):
     text = ''
 
     for i in py_files:
-        with open(f'plugins/{i}', 'r') as f:
-            text += f.read()
+        async with open(f'plugins/{i}', 'r') as f:
+            text += await f.read()
 
     pattern = re.compile(r'commands=\[[^]]*]')
     
