@@ -1,4 +1,4 @@
-from os import listdir
+from aiofiles.os import listdir
 
 import re
 
@@ -13,7 +13,7 @@ from pyrogram.types import Message
     ) & filters.me
 )
 async def all_commands(_, message: Message):
-    files = listdir("plugins/")
+    files = await listdir("plugins/")
     py_files = [
         file 
         for file in files
