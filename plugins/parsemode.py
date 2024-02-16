@@ -10,8 +10,8 @@ from misc.filters import in_message
     filters.me
 )
 @Client.on_message(
-    in_message('<') &
-    in_message('>') &
+    in_message(['<', '>']) &
+    # in_message('>') &
     filters.me
 )
 async def update_parsemode(_: Client, message: Message):
