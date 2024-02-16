@@ -6,26 +6,11 @@ from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 
 from misc.filters import startswith
+from misc.utils import Flag
 
 
-is_typing = True
-is_bold = True
-
-
-async def toggle_state(state_var_name: Literal['is_typing', 'is_bold'], message: Message, text: str):
-    global is_typing, is_bold
-
-    if state_var_name == 'is_typing':
-        is_typing = not is_typing
-        state_var = is_typing
-    elif state_var_name == 'is_bold':
-        is_bold = not is_bold
-        state_var = is_bold
-    else:
-        raise ValueError("Invalid state variable name")
-    
-    state = 'enabled' if state_var else 'disabled'
-    await message.reply(f'<b>{text} is {state}! </b>')
+is_typing = Flag()
+is_bold = Flag()
 
 
 @Client.on_message(
@@ -35,7 +20,8 @@ async def toggle_state(state_var_name: Literal['is_typing', 'is_bold'], message:
     ) & filters.me
 )
 async def switch_typing(_, message: Message):
-    await toggle_state('is_typing', message, 'Typing')
+    is_typing.toggle()
+    await message.reply('Typing was toggled!')
 
 
 @Client.on_message(
@@ -45,27 +31,26 @@ async def switch_typing(_, message: Message):
     ) & filters.me
 )
 async def switch_bold(_, message: Message):
-    await toggle_state('is_bold', message, 'Bold')
+    is_bold.toggle()
+    await message.reply('Bold was toggled!')
 
 
 @Client.on_message(startswith('/') & filters.me)
 async def type(_, message: Message):
-    global is_typing, is_bold
-
-    if not is_typing:
+    if not is_typing.status:
         return
 
     z = ''
-    if is_bold:
+    if is_bold.status:
         z = '**'
 
     if message.voice is not None:
         return
 
-    original_text = message.text[1:]  # without `/` symbol
+    original_text = message.text[1:]
     text = message.text[1:]
-    tbp = ""  # to be printed
-    typing_symbol = "▒"  # symbol that will be writed after your letters
+    tbp = ""
+    typing_symbol = "▒"
 
     while tbp != original_text:
         try:
