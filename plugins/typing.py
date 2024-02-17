@@ -35,7 +35,7 @@ async def switch_bold(_, message: Message):
     await message.reply('Bold was toggled!')
 
 
-@Client.on_message(startswith('/') & filters.me)
+@Client.on_message(startswith('\\') & filters.me)
 async def type(_, message: Message):
     if not is_typing.status:
         return
