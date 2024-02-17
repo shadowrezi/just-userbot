@@ -1,18 +1,33 @@
-from pyrogram import Client, filters
+from pyrogram import Client
+from pyrogram.filters import me, command
 from pyrogram.types import Message
 
-from misc.filters import in_message
+from misc.filters import in_
+from misc.utils import Flag
+
+is_parsemode = Flag(True)
 
 
 @Client.on_edited_message(
     in_('<') &
     in_('>') &
-    filters.me
+    me
 )
 @Client.on_message(
     in_('<') &
     in_('>') &
-    filters.me
+    me
 )
 async def update_parsemode(_: Client, message: Message):
-    await message.edit(message.text)
+    if is_parsemode.status:
+        await message.edit(message.text)
+
+
+@Client.on_message(
+    command(
+        commands=['switch-parsemode'],
+        prefix=['.', '/']
+    ) & me
+)
+async def switch_parsemode(_: Client, message: Message):
+    is_parsemode.toggle()
