@@ -15,7 +15,7 @@ async def edit_with_retry(message: Message, text: str, time: int | float = 0.5):
 
 @Client.on_message(
     filters.command(
-        commands=["magic"],
+        commands=["heart"],
         prefixes=['.', '/']
     ) & filters.me
 )
