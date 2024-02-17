@@ -5,13 +5,13 @@ from misc.filters import in_message
 
 
 @Client.on_edited_message(
-    in_message('<') &
-    in_message('>') &
+    in_('<') &
+    in_('>') &
     filters.me
 )
 @Client.on_message(
-    in_message(['<', '>']) &
-    # in_message('>') &
+    in_('<') &
+    in_('>') &
     filters.me
 )
 async def update_parsemode(_: Client, message: Message):
