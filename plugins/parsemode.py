@@ -26,7 +26,7 @@ async def update_parsemode(_: Client, message: Message):
 @Client.on_message(
     command(
         commands=['switch-parsemode'],
-        prefix=['.', '/']
+        prefixes=['.', '/']
     ) & me
 )
 async def switch_parsemode(_: Client, message: Message):
