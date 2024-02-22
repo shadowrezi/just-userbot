@@ -35,8 +35,8 @@ async def equation(_: Client, message: Message):
   y = Symbol('y')
   z = Symbol('z')
 
-  eq1 = eval(replace_letters(equation[0]))
-  eq2 = eval(replace_letters(equation[0]))
+  eq1 = eval(await replace_letters(equation[0]))
+  eq2 = eval(await replace_letters(equation[0]))
   
   eq = Eq(
     eq1,
