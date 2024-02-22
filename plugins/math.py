@@ -1,6 +1,7 @@
 from sympy import Symbol, Eq, solve
 
-from pyrogram import Client, Message
+from pyrogram import Client
+from pyrogram.types import Message
 from pyrogram.filters import command, me, private
 
 
