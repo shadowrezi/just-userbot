@@ -33,12 +33,9 @@ async def equation(_: Client, message: Message):
 )
 async def math(_: Client, message: Message):
   text = ' '.join(message.command[1:])
-  result = solve(
-    Eq(
-      eval(text)
-    )
-  )
+  result = eval(text)
+
   await message.reply(
-    result[0] if len(result)==1 else result,
+    result,
     quote=True
   )
