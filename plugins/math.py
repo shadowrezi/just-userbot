@@ -1,8 +1,24 @@
 from sympy import Symbol, Eq, solve
+from re import compile, fullmatch
 
 from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram.filters import command, me, private
+
+
+def is_number(num: str) -> bool:
+  pattern = compile(r'\d+(\.\d+)?')
+  return bool(
+    fullmatch(pattern, num)
+  )
+
+
+async def replace_letters(text: str, letters: list[str]='xyz'):
+  result = text
+  for i in range(1, len(text)):
+    if text[i] in letters and is_number(text[i - 1]):
+        result.replace(letter, '*' + letter, 1)
+  return result
 
 
 @Client.on_message(
@@ -18,10 +34,15 @@ async def equation(_: Client, message: Message):
   x = Symbol('x')
   y = Symbol('y')
   z = Symbol('z')
+
+  eq1 = eval(equation[0])
+  eq1 = replace_letters(eq1)
+  eq2 = eval(equation[1])
+  eq2 = replace_letters(eq2)
   
   eq = Eq(
-    eval(equation[0]),
-    eval(equation[1])
+    eq1,
+    eq2
   )
   result = solve(eq)
   
