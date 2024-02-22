@@ -15,9 +15,10 @@ def is_number(num: str) -> bool:
 
 async def replace_letters(text: str, letters: list[str]='xyz'):
   result = text
-  for i in range(1, len(text)):
-    if text[i] in letters and is_number(text[i - 1]):
-        result.replace(letter, '*' + letter, 1)
+  for letter in letters:
+      for i in range(1, len(text)):
+          if text[i] in letters and is_number(text[i - 1]):
+              result.replace(letter, '*' + letter, 1)
   return result
 
 
