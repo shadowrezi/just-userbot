@@ -25,3 +25,5 @@ youtube-search-python
 youtube-search
 
 colorama
+
+sympy
