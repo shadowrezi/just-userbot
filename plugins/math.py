@@ -7,13 +7,18 @@ from pyrogram.filters import command, me, private
 
 @Client.on_message(
   command(
-    commands=['/eq'],
+    commands=['eq'],
     prefixes=['.', '/']
   ) & (me | private)
 )
 async def equation(_: Client, message: Message):
   text = ' '.join(message.command[1:])
   equation = text.split('=')
+
+  x = Symbol('x')
+  y = Symbol('y')
+  z = Symbol('z')
+  
   eq = Eq(
     eval(equation[0]),
     eval(equation[1])
