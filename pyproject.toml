@@ -24,6 +24,7 @@ yt-dlp = "2023.10.13"
 youtube-search-python = "^1.6.6"
 youtube-search = "^2.1.2"
 colorama = "^0.4.6"
+sympy = "^1.12"
 
 
 [build-system]
