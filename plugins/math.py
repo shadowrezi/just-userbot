@@ -9,7 +9,7 @@ async def replace_letters(text: str, letters: list[str]='xyz'):
   result = text
   for letter in letters:
       for i in range(1, len(text)):
-          if text[i] in letters and (text[i - 1].is_digit() or text[i - 1] in 'xyz'):
+          if text[i] in letters and (text[i - 1].isdigit() or text[i - 1] in 'xyz'):
               result.replace(letter, '*' + letter, 1)
   return result
 
