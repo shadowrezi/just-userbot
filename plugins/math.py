@@ -1,23 +1,15 @@
 from sympy import Symbol, Eq, solve
-from re import compile, fullmatch
 
 from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram.filters import command, me, private
 
 
-def is_number(num: str) -> bool:
-  pattern = compile(r'\d+(\.\d+)?')
-  return bool(
-    fullmatch(pattern, num)
-  )
-
-
 async def replace_letters(text: str, letters: list[str]='xyz'):
   result = text
   for letter in letters:
       for i in range(1, len(text)):
-          if text[i] in letters and is_number(text[i - 1]):
+          if text[i] in letters and (text[i - 1].is_digit() or text[i - 1] in 'xyz'):
               result.replace(letter, '*' + letter, 1)
   return result
 
