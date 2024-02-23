@@ -38,7 +38,7 @@ async def equation(_: Client, message: Message):
   result = solve(eq)
   
   await message.reply(
-    result[0] if len(result)==1 else result,
+    str(result[0]) if len(result)==1 else str(result),
     quote=True
   )
 
