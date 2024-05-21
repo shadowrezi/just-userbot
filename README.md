@@ -56,7 +56,7 @@
     │   ├── calculator.py
     │   ├── commands.py
     │   ├── count.py
-        ├── twitch.py
+    │   ├── twitch.py
     │   ├── exec.py
     │   ├── heart.py
     │   ├── jokes.py
