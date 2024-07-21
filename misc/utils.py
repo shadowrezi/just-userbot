@@ -1,5 +1,4 @@
 class Flag:
-
   def __init__(self, status=True) -> None:
     self.status = status
 
