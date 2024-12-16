@@ -37,10 +37,10 @@ if __name__ == '__main__':
 
 
 def main():
-    signal.signal(
-        signal.SIGTSTP,
-        handle_ctrl_z
-    )
+    # signal.signal(
+    # signal.SIGTSTP,
+    # await handle_ctrl_z
+    # )
     print(Fore.LIGHTGREEN_EX + 'Starting bot...' + Fore.RESET)
 
     app.run()
@@ -54,7 +54,7 @@ def main():
 async def handle_ctrl_z(signal, frame):
     print(Fore.LIGHTRED_EX + 'Exiting bot...' + Fore.RESET)
 
-    if await exists('downloads'):
+    if await path.exists('downloads'):
         rmtree('downloads')
 
     sys.exit(0)
@@ -62,7 +62,7 @@ async def handle_ctrl_z(signal, frame):
 
 if __name__ == '__main__':
     try:
-        main()
+        asyncio.run(main())
     finally:
         if asyncio.run(path.exists('downloads')):
             rmtree('downloads')
