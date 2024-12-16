@@ -8,3 +8,5 @@ plugins/me.py
 plugins/test.py
 
 tester.py
+
+.env
