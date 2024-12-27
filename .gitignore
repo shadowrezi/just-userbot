@@ -10,3 +10,6 @@ plugins/test.py
 tester.py
 
 .env
+
+Pipfile
+Pipfile.lock
