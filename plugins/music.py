@@ -13,20 +13,24 @@ from fake_useragent import UserAgent
 
 YDL_OPTIONS = {'format': 'bestaudio[ext=m4a]'}
 
-OWNER = 'ShadowRazea'
+OWNER = 'ShadowRezi'
 CAPTION = f'<b>🎧 Uploader @{OWNER}</b>'
 FINDING_SONG = '<b>🔎 Finding song...</b>'
-SONG_NOT_FOUND = f"<b>❌ Song not found.\n\nPlease give a valid song name.</b>\n\nIf bot don't work, write me @{OWNER}"
+SONG_NOT_FOUND = f'''
+< b > ❌ Song not found.
+Please give a valid song name.</b>
+If bot don't work, write me @{OWNER}
+'''.strip()
 DOWNLOADING_FILE = '<b>📥 Downloading file...</b>'
 UPLOADING_FILE = '<b>📤 Uploading file...</b>'
-ERROR = f'<b>❌ Error, write to OWNER @{OWNER} or add issue on <a href="https://github.com/shadowrezi/just-userbot">GitHub Repository</a></b>'
+ERROR = '123'
 
 
-async def search_video(query: str) -> tuple:
+async def search_video(query: str):
     return YoutubeSearch(query, max_results=1).to_dict()[0]
 
 
-async def download_video(results: dict) -> str:
+async def download_video(results) -> str:
     link = f"https://youtube.com{results['url_suffix']}"
     title = results['title'][:40]
     thumb_name = f'{title.replace("/", "")}.jpg'
@@ -38,10 +42,10 @@ async def download_video(results: dict) -> str:
     async with ClientSession(headers=headers) as session:
         async with session.get(thumbnail, allow_redirects=True) as response:
             thumb = await response.read()
-    
+
     async with open(thumb_name, 'wb') as f:
         await f.write(thumb)
-    
+
     with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
         ydl.cache.remove()
 
@@ -58,7 +62,7 @@ async def download_video(results: dict) -> str:
     return audio_file, dur, title, thumb_name
 
 
-@Client.on_message(
+@ Client.on_message(
     command(
         commands=['music'],
         prefixes=['.', '/']

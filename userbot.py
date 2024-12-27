@@ -4,7 +4,6 @@ from shutil import rmtree
 
 from aiofiles.os import path
 
-import signal
 import sys
 
 from pyrogram import Client

@@ -32,7 +32,7 @@ async def get_answers(url: str) -> str:
             'joinform-name'
         )
         name_field.clear()
-        name_field.send_keys('asd')
+        name_field.send_keys('Error connect: 404')
 
         sleep(1)
 
