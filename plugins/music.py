@@ -1,5 +1,4 @@
 from aiohttp import ClientSession
-
 from pyrogram import Client
 from pyrogram.filters import me, private, command
 from pyrogram.types import Message
@@ -7,66 +6,103 @@ from pyrogram.types import Message
 from aiofiles import open
 from aiofiles.os import remove, path
 
-from youtube_search import YoutubeSearch
 import yt_dlp
 from fake_useragent import UserAgent
 
-YDL_OPTIONS = {'format': 'bestaudio[ext=m4a]'}
 
+# CONFIG
 OWNER = 'ShadowRezi'
 CAPTION = f'<b>🎧 Uploader @{OWNER}</b>'
 FINDING_SONG = '<b>🔎 Finding song...</b>'
-SONG_NOT_FOUND = f'''
-< b > ❌ Song not found.
-Please give a valid song name.</b>
-If bot don't work, write me @{OWNER}
-'''.strip()
+SONG_NOT_FOUND = f"<b>❌ Song not found.\nPlease give a valid song name.\nIf bot doesn't work, write @{OWNER}</b>"
 DOWNLOADING_FILE = '<b>📥 Downloading file...</b>'
 UPLOADING_FILE = '<b>📤 Uploading file...</b>'
-ERROR = '123'
+ERROR = '❌ Error occurred'
+
+YDL_OPTIONS = {
+    'format': 'bestaudio[ext=m4a]',
+    'quiet': True
+}
 
 
+# 🔎 SEARCH YOUTUBE VIDEO
 async def search_video(query: str):
-    return YoutubeSearch(query, max_results=1).to_dict()[0]
+    opts = {
+        "quiet": True,
+        "extract_flat": True,
+    }
+
+    with yt_dlp.YoutubeDL(opts) as ydl:
+        data = ydl.extract_info(f"ytsearch10:{query}", download=False)
+
+    if not data or "entries" not in data:
+        return None
+
+    for e in data["entries"]:
+        url = e.get("url", "")
+
+        if not url:
+            continue
+
+        if "/shorts/" in url:
+            continue
+        if "/watch" not in url:
+            continue
+
+        return {
+            "id": e["id"],
+            "title": e.get("title", "Unknown"),
+            "duration": e.get("duration"),
+            "thumbnail": e.get("thumbnails", [{}])[0].get("url"),
+            "url": f"https://www.youtube.com/watch?v={e['id']}",
+        }
+
+    return None
 
 
-async def download_video(results) -> str:
-    link = f"https://youtube.com{results['url_suffix']}"
-    title = results['title'][:40]
-    thumb_name = f'{title.replace("/", "")}.jpg'
-    thumbnail = results['thumbnails'][0]
-    duration = results['duration']
+# 📥 DOWNLOAD AUDIO + THUMBNAIL
+async def download_video(results: dict):
+    link = results["url"]
+    title = results["title"][:40]
+    duration = results["duration"]
+    thumbnail = results["thumbnail"]
 
-    headers = {'User-Agent': UserAgent().random}
+    safe_title = title.replace("/", "")
+    thumb_name = f"{safe_title}.jpg"
 
+    headers = {"User-Agent": UserAgent().random}
+
+    # download thumbnail
     async with ClientSession(headers=headers) as session:
-        async with session.get(thumbnail, allow_redirects=True) as response:
-            thumb = await response.read()
+        async with session.get(thumbnail) as resp:
+            image = await resp.read()
 
-    async with open(thumb_name, 'wb') as f:
-        await f.write(thumb)
+    async with open(thumb_name, "wb") as f:
+        await f.write(image)
 
+    # download audio
     with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
         ydl.cache.remove()
+        info = ydl.extract_info(link, download=False)
+        audio_file = ydl.prepare_filename(info)
+        ydl.process_info(info)
 
-        info_dict = ydl.extract_info(link, download=False)
-        audio_file = ydl.prepare_filename(info_dict)
-        ydl.process_info(info_dict)
-
-    secmul, dur, dur_arr = 1, 0, duration.split(':')
-
-    for i in dur_arr[::-1]:
-        dur += int(float(i)) * secmul
-        secmul *= 60
+    # duration → seconds
+    dur = 0
+    mult = 1
+    if duration:
+        dur = int(duration)
+        
+        #for part in duration.split(":")[::-1]:
+        #    dur += int(part) * mult
+        #    mult *= 60
 
     return audio_file, dur, title, thumb_name
 
 
-@ Client.on_message(
-    command(
-        commands=['music'],
-        prefixes=['.', '/']
-    ) & (me | private)
+# 🎵 PYROGRAM HANDLER
+@Client.on_message(
+    command(['music'], prefixes=['.', '/']) & (me | private)
 )
 async def music(_: Client, message: Message):
     query = ' '.join(message.command[1:])
@@ -74,6 +110,8 @@ async def music(_: Client, message: Message):
 
     try:
         results = await search_video(query)
+        if not results:
+            return await msg.edit(SONG_NOT_FOUND)
     except Exception as ex:
         await msg.edit(SONG_NOT_FOUND)
         raise ex
@@ -91,17 +129,18 @@ async def music(_: Client, message: Message):
             thumb=thumb_name,
             title=title,
             duration=duration,
+            performer="ShadowRezi"
         )
 
         await msg.delete()
-    except Exception as ex:
-        await msg.edit(ERROR)
-        raise ex
 
-    finally:
-        if await path.isfile(thumb_name):
-            await remove(thumb_name)
-            print(thumb_name)
-        if 'audio_file' in locals() and await path.isfile(audio_file):
-            await remove(audio_file)
-            print(audio_file)
+    except Exception:
+        await msg.edit(ERROR)
+        raise
+
+    # cleanup files
+    if await path.isfile(thumb_name):
+        await remove(thumb_name)
+
+    if 'audio_file' in locals() and await path.isfile(audio_file):
+        await remove(audio_file)

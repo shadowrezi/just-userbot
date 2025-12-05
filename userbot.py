@@ -1,4 +1,4 @@
-from os import getenv
+from os import getenv, environ
 import asyncio
 from shutil import rmtree
 
@@ -16,10 +16,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+environ["PYROGRAM_DISABLE_UVLOOP"] = "1"
+
 API_ID = getenv('API_ID')
 API_HASH = getenv('API_HASH')
 
-uvloop.install()
+# uvloop.install()
 app = Client(
     'telegram',
     api_id=API_ID,
